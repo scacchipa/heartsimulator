@@ -13,6 +13,6 @@ export class AutoCell extends Cell {
                 this.alpha = this.alpha + (0.05 - this.alpha) / 50;
                 break;
        }
-     }
+    }
     
 }

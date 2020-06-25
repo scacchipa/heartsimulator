@@ -16,6 +16,10 @@ export class Cell  {
 
           this.Vm = this.membranePotential();
           this.charge = 0;
+
+          this.tissue = window.global.tissue;
+          this.rows = window.global.rows;
+          this.cols = window.global.cols
      }
 
      stateColor() {
@@ -27,7 +31,7 @@ export class Cell  {
      }
 
      membranePotential() {
-          this.Vm = (61.5 * Math.log10((this.Ko + (this.alpha * this.No)) / (this.Ki + (this.alpha * this.Ni))) );
+          this.Vm = (61.5 * Math.log10(((this.Ko) + (this.alpha * this.No)) / (this.Ki + (this.alpha * this.Ni))) );
      }
 
      calculateAlpha() {
@@ -45,7 +49,7 @@ export class Cell  {
      }
 
      calculateCharge() {
-          if (this.colPosition < 1 || this.colPosition >= (50-1) || this.rowPosition < 1 || this.rowPosition >= (50-1)) {
+          if (this.colPosition < 1 || this.colPosition >= (this.cols-1) || this.rowPosition < 1 || this.rowPosition >= (this.rows-1)) {
                return; 
           }
 
@@ -56,15 +60,15 @@ export class Cell  {
 
           this.charge =
           //centro
-          (0.4 * window.tissue[this.colPosition][this.rowPosition].Vm) +
+          (0.4 * this.tissue[this.colPosition][this.rowPosition].Vm) +
           //arriba
-          (0.15 * window.tissue[this.colPosition][preRow].Vm) +
+          (0.15 * this.tissue[this.colPosition][preRow].Vm) +
           //abajo
-          (0.15 * window.tissue[this.colPosition][postRow].Vm) +
+          (0.15 * this.tissue[this.colPosition][postRow].Vm) +
           //derecha
-          (0.15 * window.tissue[preCol][this.rowPosition].Vm) +
+          (0.15 * this.tissue[preCol][this.rowPosition].Vm) +
           //izquierda
-          (0.15 * window.tissue[postCol][this.rowPosition].Vm);
+          (0.15 * this.tissue[postCol][this.rowPosition].Vm);
 
           this.updateState();
      }
@@ -73,7 +77,7 @@ export class Cell  {
           if (this.state == 'resting' && this.charge > -50) {
                this.state = 'open';
              }
-          else if (this.state == 'open' && this.charge > 10) {
+          else if (this.state == 'open' && this.charge > -20) {
                this.state = 'inactive';
           }
           else if (this.state == 'inactive' && this.charge < -55) {

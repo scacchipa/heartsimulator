@@ -16,15 +16,15 @@ const s = ( sketch  ) => {
   sketch.setup = () => {  
     sketch.createCanvas(500, 500);
     for (let i = 0; i < cols; i++) {
-      window.tissue[i] = [];
+      tissue[i] = [];
 
       for (let j = 0; j < rows; j++) {
 
-        if( i == 5 && j == 5) {
-          window.tissue[i][j] = new AutoCell(i*10, j*10, 10, 10, i, j)
+        if( i == 10 && j == 10) {
+          tissue[i][j] = new AutoCell(i*10, j*10, 10, 10, i, j)
         }
         else {
-          window.tissue[i][j] = new Cell(i*10, j*10, 10, 10, i, j);
+          tissue[i][j] = new Cell(i*10, j*10, 10, 10, i, j);
         }
       }      
     }
@@ -35,21 +35,30 @@ const s = ( sketch  ) => {
 
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
-        let cell = window.tissue[i][j];
-
-        sketch.rect(cell.x, cell.y, cell.width, cell.height);
-        sketch.fill(cell.stateColor());
+        let cell = tissue[i][j];
 
         cell.membranePotential();
         cell.calculateAlpha();
         cell.calculateCharge();
 
+        sketch.rect(cell.x, cell.y, cell.width, cell.height);
+        sketch.fill(cell.stateColor());
+
+        if( i == 10 && j == 10) {
+          console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
+        }
       }      
     }
 
   };
 };
 
-window.tissue = [];
+window.global = {
+  tissue: [],
+  rows: 50,
+  cols: 50
+};
+
+let tissue = window.global.tissue;
 let myp5 = new p5(s, 'chart');
  

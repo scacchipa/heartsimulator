@@ -1,6 +1,7 @@
 import p5 from 'p5';
 import {Cell} from './Cell.js';
 import {AutoCell} from './AutoCell.js';
+import { transform } from 'lodash';
 
 
 const s = ( sketch  ) => {
@@ -33,6 +34,8 @@ const s = ( sketch  ) => {
   sketch.draw = () => {
     sketch.background(0);
 
+    // console.log('X:',sketch.mouseX, ' Y:',sketch.mouseY);
+    
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         let cell = tissue[i][j];
@@ -44,13 +47,27 @@ const s = ( sketch  ) => {
         sketch.rect(cell.x, cell.y, cell.width, cell.height);
         sketch.fill(cell.stateColor());
 
-        if( i == 10 && j == 10) {
-          console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
-        }
+        // if( i == 10 && j == 10) {
+        //   console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
+        // }
       }      
     }
 
   };
+
+  sketch.mousePressed = () => {
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        let cell = tissue[i][j];
+        if (cell.isInSide(sketch.mouseX, sketch.mouseY)) 
+        {
+          tissue[i][j] = new AutoCell(i*10, j*10, 10, 10, i, j);
+        }
+      }      
+    }
+
+  }
+
 };
 
 window.global = {

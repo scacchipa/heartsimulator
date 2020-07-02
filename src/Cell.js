@@ -84,4 +84,11 @@ export class Cell  {
                this.state = 'resting';
           }
      }
+
+     isInSide(mX, mY) {
+          //is mouse insede mX and mY
+          if((this.x < mX) && (this.x+10 > mX) && (this.y < mY) && (this.y+10 > mY)) return true;
+          else return false;
+
+     }
 }

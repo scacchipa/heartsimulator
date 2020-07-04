@@ -21,7 +21,7 @@ const s = ( sketch  ) => {
 
       for (let j = 0; j < rows; j++) {
 
-        if( i == 10 && j == 10) {
+        if( i == 10  && j == 10) {
           tissue[i][j] = new AutoCell(i*10, j*10, 10, 10, i, j)
         }
         else {
@@ -47,15 +47,16 @@ const s = ( sketch  ) => {
         sketch.rect(cell.x, cell.y, cell.width, cell.height);
         sketch.fill(cell.stateColor());
 
-        // if( i == 10 && j == 10) {
-        //   console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
-        // }
+        //MEASURE 
+        if( i == 0 && j == 0) {
+          console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
+        }
       }      
     }
 
   };
 
-  sketch.mousePressed = () => {
+  sketch.mouseDragged = () => {
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         let cell = tissue[i][j];

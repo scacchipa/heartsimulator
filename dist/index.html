@@ -5,9 +5,13 @@
   </head>
   <body>
     <div id="chart"></div>
-    <button>Automatic cell</button>
-    <button>Dead cell</button>
-
+    <button onclick="changeCell('Auto');">Auto Cell</button>
+    <button onclick="changeCell('Dead');">Dead Cell</button>
+    <script>
+      function changeCell(newCell) {
+        window.global.AltCellBtn = newCell;
+      }
+    </script>
     <script src="main.js"></script>
   </body>
 </html>

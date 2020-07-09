@@ -8,12 +8,13 @@ const s = ( sketch  ) => {
   let y = 100;
 
   let rows = window.global.rows;
-  let cols = window.global.cols
+  let cols = window.global.cols;
 
   let myCell = new Cell(100, 100, 20, 20);
-    
+
   sketch.setup = () => {  
     sketch.createCanvas(500, 500);
+
     for (let i = 0; i < cols; i++) {
       tissue[i] = [];
 
@@ -46,21 +47,33 @@ const s = ( sketch  ) => {
         sketch.fill(cell.stateColor());
 
         //MEASURE 
-        if( i == 48 && j == 48) {
-          console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
-        }
+        // if( i == 48 && j == 48) {
+        //   console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
+        // }
       }      
     }
 
   };
 
   sketch.mouseClicked = () => {
+    let AltCellBtn = window.global.AltCellBtn;
+
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         let cell = tissue[i][j];
         if (cell.isInSide(sketch.mouseX, sketch.mouseY)) 
-        {
-          tissue[i][j] = new DeadCell(i*10, j*10, 10, 10, i, j);
+        { 
+          switch (AltCellBtn) {
+            case 'Dead':
+              tissue[i][j] = new DeadCell(i*10, j*10, 10, 10, i, j);
+              break;
+            case 'Auto':
+              tissue[i][j] = new AutoCell(i*10, j*10, 10, 10, i, j);
+              break;
+            default: 
+              console.log('click')
+
+          }
         }
       }      
     }
@@ -72,7 +85,8 @@ const s = ( sketch  ) => {
 window.global = {
   tissue: [],
   rows: 50,
-  cols: 50
+  cols: 50,
+  AltCellBtn: 'Dead'
 };
 
 let tissue = window.global.tissue;

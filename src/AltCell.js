@@ -1,6 +1,6 @@
 import { Cell } from './Cell';
 
-export class AutoCell extends Cell {
+class AutoCell extends Cell {
     calculateAlpha() {
         switch (this.state) {
             case 'resting':
@@ -16,3 +16,15 @@ export class AutoCell extends Cell {
     }
     
 }
+
+class DeadCell extends Cell {
+    calculateAlpha() {
+        this.alpha = .1;
+   }
+
+    stateColor() {
+        return '#000000'; 
+    }
+}
+
+export { AutoCell, DeadCell };

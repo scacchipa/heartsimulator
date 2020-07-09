@@ -1,9 +1,6 @@
 import p5 from 'p5';
 import {Cell} from './Cell.js';
-import {AutoCell} from './AutoCell.js';
-import {DeadCell} from './DeadCell.js';
-import { transform } from 'lodash';
-
+import {AutoCell, DeadCell} from './AltCell.js';
 
 const s = ( sketch  ) => {
 

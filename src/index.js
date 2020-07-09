@@ -1,16 +1,14 @@
 import p5 from 'p5';
 import {Cell} from './Cell.js';
-import {AutoCell} from './AutoCell.js';
-import { transform } from 'lodash';
-
+import {AutoCell, DeadCell} from './AltCell.js';
 
 const s = ( sketch  ) => {
 
   let x = 100;
   let y = 100;
 
-  let cols = 50;
-  let rows = 50;
+  let rows = window.global.rows;
+  let cols = window.global.cols
 
   let myCell = new Cell(100, 100, 20, 20);
     
@@ -48,7 +46,7 @@ const s = ( sketch  ) => {
         sketch.fill(cell.stateColor());
 
         //MEASURE 
-        if( i == 0 && j == 0) {
+        if( i == 48 && j == 48) {
           console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
         }
       }      
@@ -56,13 +54,13 @@ const s = ( sketch  ) => {
 
   };
 
-  sketch.mouseDragged = () => {
+  sketch.mouseClicked = () => {
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         let cell = tissue[i][j];
         if (cell.isInSide(sketch.mouseX, sketch.mouseY)) 
         {
-          tissue[i][j] = new AutoCell(i*10, j*10, 10, 10, i, j);
+          tissue[i][j] = new DeadCell(i*10, j*10, 10, 10, i, j);
         }
       }      
     }

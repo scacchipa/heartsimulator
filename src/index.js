@@ -4,16 +4,11 @@ import {AutoCell, DeadCell} from './AltCell.js';
 
 const s = ( sketch  ) => {
 
-  let x = 100;
-  let y = 100;
-
   let rows = window.global.rows;
   let cols = window.global.cols;
 
-  let myCell = new Cell(100, 100, 20, 20);
-
   sketch.setup = () => {  
-    sketch.createCanvas(500, 500);
+    sketch.createCanvas(850, 850);
 
     for (let i = 0; i < cols; i++) {
       tissue[i] = [];
@@ -21,10 +16,10 @@ const s = ( sketch  ) => {
       for (let j = 0; j < rows; j++) {
 
         if( i == 10  && j == 10) {
-          tissue[i][j] = new AutoCell(i*10, j*10, 10, 10, i, j)
+          tissue[i][j] = new AutoCell(i*17, j*17, 17, 17, i, j)
         }
         else {
-          tissue[i][j] = new Cell(i*10, j*10, 10, 10, i, j);
+          tissue[i][j] = new Cell(i*17, j*17, 17, 17, i, j);
         }
       }      
     }
@@ -55,7 +50,7 @@ const s = ( sketch  ) => {
 
   };
 
-  sketch.mouseClicked = () => {
+  sketch.mouseDragged = () => {
     let AltCellBtn = window.global.AltCellBtn;
 
     for (let i = 0; i < cols; i++) {
@@ -65,14 +60,13 @@ const s = ( sketch  ) => {
         { 
           switch (AltCellBtn) {
             case 'Dead':
-              tissue[i][j] = new DeadCell(i*10, j*10, 10, 10, i, j);
+              tissue[i][j] = new DeadCell(i*17, j*17, 17, 17, i, j);
               break;
             case 'Auto':
-              tissue[i][j] = new AutoCell(i*10, j*10, 10, 10, i, j);
+              tissue[i][j] = new AutoCell(i*17, j*17, 17, 17, i, j);
               break;
             default: 
               console.log('click')
-
           }
         }
       }      

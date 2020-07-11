@@ -43,7 +43,7 @@ const s = ( sketch  ) => {
   sketch.draw = () => {
     sketch.background(0);
     let play = window.global.play;
-
+    let AltCellBtn = window.global.AltCellBtn;
     // console.log('X:',sketch.mouseX, ' Y:',sketch.mouseY);
 
       for (let i = 0; i < cols; i++) {
@@ -59,7 +59,21 @@ const s = ( sketch  ) => {
   
           sketch.rect(cell.x, cell.y, cell.width, cell.height);
           sketch.fill(cell.stateColor());
-  
+          
+          if (sketch.mouseIsPressed && cell.isInSide(sketch.mouseX, sketch.mouseY)) 
+          { 
+            switch (AltCellBtn) {
+              case 'Dead':
+                tissue[i][j] = new DeadCell(i*size, j*size, size, i, j);
+                console.log(tissue[i][j]);
+                break;
+              case 'Auto':
+                tissue[i][j] = new AutoCell(i*size, j*size, size, i, j);
+                break;
+              default: 
+                console.log('click')
+            }
+          }
           //MEASURE 
           // if( i == 48 && j == 48) {
           //   console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
@@ -67,31 +81,6 @@ const s = ( sketch  ) => {
         }      
       }
   };
-
-  sketch.mouseClicked = () => {
-    let AltCellBtn = window.global.AltCellBtn;
-
-    for (let i = 0; i < cols; i++) {
-      for (let j = 0; j < rows; j++) {
-        let cell = tissue[i][j];
-        if (cell.isInSide(sketch.mouseX, sketch.mouseY)) 
-        { 
-          switch (AltCellBtn) {
-            case 'Dead':
-              tissue[i][j] = new DeadCell(i*size, j*size, size, i, j);
-              console.log(tissue[i][j]);
-              break;
-            case 'Auto':
-              tissue[i][j] = new AutoCell(i*size, j*size, size, i, j);
-              break;
-            default: 
-              console.log('click')
-          }
-        }
-      }      
-    }
-
-  }
 };
 
 

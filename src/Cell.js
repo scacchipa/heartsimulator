@@ -1,9 +1,9 @@
 export class Cell  {
-     constructor(_x, _y, _w, _h, _colPosition, _rowPosition){
+     constructor(_x, _y, _s,  _colPosition, _rowPosition){
           this.x = _x;
           this.y = _y;
-          this.width = _w;
-          this.height = _h;
+          this.width = _s;
+          this.height = _s;
           this.colPosition = _colPosition;
           this.rowPosition = _rowPosition;
 

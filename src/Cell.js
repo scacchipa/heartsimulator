@@ -24,9 +24,9 @@ export class Cell  {
 
      stateColor() {
           switch (this.state) {
-               case 'resting': return '#EA3546'; //red
+               case 'resting': return '#032B43'; //blue'
                case 'open': return '#F9C80E'; //green
-               case 'inactive': return '#032B43'; //blue
+               case 'inactive': return '#EA3546'; //red
           }
      }
 

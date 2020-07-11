@@ -25,6 +25,7 @@ class DeadCell extends Cell {
     stateColor() {
         return '#000000'; 
     }
+
 }
 
 export { AutoCell, DeadCell };

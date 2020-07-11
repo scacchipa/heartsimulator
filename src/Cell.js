@@ -87,8 +87,10 @@ export class Cell  {
 
      isInSide(mX, mY) {
           //is mouse insede mX and mY
-          if((this.x < mX) && (this.x+10 > mX) && (this.y < mY) && (this.y+10 > mY)) return true;
-          else return false;
-
+          if((mX >= this.x) && (mX <= this.x + 17) && (mY >= this.y) && (mY <=this.y+ 17)) return true;
+          else {
+               console.log("i am not inside")
+               return false;
+          }
      }
 }

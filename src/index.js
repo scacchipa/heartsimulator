@@ -66,9 +66,6 @@ const s = ( sketch  ) => {
           // }
         }      
       }
-    
-
-
   };
 
   sketch.mouseClicked = () => {

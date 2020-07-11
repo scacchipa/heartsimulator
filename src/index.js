@@ -27,30 +27,36 @@ const s = ( sketch  ) => {
 
   sketch.draw = () => {
     sketch.background(0);
+    let play = window.global.play;
 
     // console.log('X:',sketch.mouseX, ' Y:',sketch.mouseY);
+
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          let cell = tissue[i][j];
+          
+          if (play == true) {
+            cell.membranePotential();
+            cell.calculateAlpha();
+            cell.calculateCharge();
+  
+          }
+  
+          sketch.rect(cell.x, cell.y, cell.width, cell.height);
+          sketch.fill(cell.stateColor());
+  
+          //MEASURE 
+          // if( i == 48 && j == 48) {
+          //   console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
+          // }
+        }      
+      }
     
-    for (let i = 0; i < cols; i++) {
-      for (let j = 0; j < rows; j++) {
-        let cell = tissue[i][j];
 
-        cell.membranePotential();
-        cell.calculateAlpha();
-        cell.calculateCharge();
-
-        sketch.rect(cell.x, cell.y, cell.width, cell.height);
-        sketch.fill(cell.stateColor());
-
-        //MEASURE 
-        // if( i == 48 && j == 48) {
-        //   console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
-        // }
-      }      
-    }
 
   };
 
-  sketch.mouseDragged = () => {
+  sketch.mouseClicked = () => {
     let AltCellBtn = window.global.AltCellBtn;
 
     for (let i = 0; i < cols; i++) {
@@ -80,7 +86,8 @@ window.global = {
   tissue: [],
   rows: 50,
   cols: 50,
-  AltCellBtn: 'Dead'
+  AltCellBtn: 'Dead',
+  play: true
 };
 
 let tissue = window.global.tissue;

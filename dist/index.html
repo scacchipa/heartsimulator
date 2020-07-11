@@ -7,9 +7,15 @@
     <div id="chart"></div>
     <button onclick="changeCell('Auto');">Auto Cell</button>
     <button onclick="changeCell('Dead');">Dead Cell</button>
+    <button onclick="play();">Play</button>
+    
     <script>
       function changeCell(newCell) {
         window.global.AltCellBtn = newCell;
+      }
+      function play(){
+        window.global.play = (!window.global.play); 
+        console.log(window.global.play)
       }
     </script>
     <script src="main.js"></script>

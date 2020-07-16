@@ -42,6 +42,14 @@ class FastCell extends Cell {
                  break;
        }
     }
+
+    stateColor() {
+        switch (this.state) {
+             case 'resting': return '#FFFFF0'; //blue'
+             case 'open': return '#F9C80E'; //yellow
+             case 'inactive': return '#EA3546'; //red
+        }
+   }
 }
 
 export { AutoCell, DeadCell, FastCell };

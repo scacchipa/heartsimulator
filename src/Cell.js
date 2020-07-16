@@ -31,7 +31,7 @@ export class Cell  {
      }
 
      membranePotential() {
-          this.Vm = (61.5 * Math.log10(((this.Ko) + (this.alpha * this.No)) / (this.Ki + (this.alpha * this.Ni))) );
+          this.Vm = (61.5 * Math.log10(((this.Ko) + (this.alpha * this.No)) / (this.Ki + (this.alpha * this.Ni))));
      }
 
      calculateAlpha() {
@@ -86,8 +86,14 @@ export class Cell  {
      }
 
      isInSide(mX, mY) {
+          mX = mX - (this.width * -1);
+          mY = mY - (this.width * -1);
           //is mouse insede mX and mY
-          if((mX >= this.x) && (mX <= this.x + 17) && (mY >= this.y) && (mY <=this.y+ 17)) return true;
+          if (
+               (mX >= this.x) && 
+               (mX <= this.x + this.width) && 
+               (mY >= this.y) && (mY <=this.y + this.height))
+               return true;
           else {
                console.log("i am not inside")
                return false;

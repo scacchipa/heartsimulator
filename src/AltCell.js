@@ -1,7 +1,8 @@
 import { Cell } from './Cell';
 
 class AutoCell extends Cell {
-    calculateAlpha() {
+    calculateAlpha() 
+    {
         switch (this.state) {
             case 'resting':
                 this.alpha = this.alpha + 0.05;
@@ -14,7 +15,6 @@ class AutoCell extends Cell {
                 break;
        }
     }
-    
 }
 
 class DeadCell extends Cell {
@@ -25,7 +25,23 @@ class DeadCell extends Cell {
     stateColor() {
         return '#000000'; 
     }
-
 }
 
-export { AutoCell, DeadCell };
+class FastCell extends Cell {
+    calculateAlpha() {
+        switch (this.state)
+        {
+            case 'resting':
+                 this.alpha = this.alpha + (0.09 - this.alpha) / 10; 
+                 break;
+            case 'open':
+                 this.alpha = this.alpha + (50 - this.alpha) / 50; 
+                 break;
+            case 'inactive':
+                 this.alpha = this.alpha + (0.05 - this.alpha) / 50; 
+                 break;
+       }
+    }
+}
+
+export { AutoCell, DeadCell, FastCell };

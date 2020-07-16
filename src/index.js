@@ -1,8 +1,6 @@
 import p5 from 'p5';
 import {Cell} from './Cell.js';
-import { AutoCell, DeadCell } from './AltCell.js';
-import { set } from 'lodash';
-
+import { AutoCell, DeadCell, FastCell } from './AltCell.js';
 
 window.global = {
   tissue: [],
@@ -80,6 +78,9 @@ const s = ( sketch ) => {
               break;
             case 'Auto':
               tissue[i][j] = new AutoCell(i*size, j*size, size, i, j);
+              break;
+            case 'Fast':
+              tissue[i][j] = new FastCell(i*size, j*size, size, i, j);
               break;
             default: 
               console.log('click')

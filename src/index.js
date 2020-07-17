@@ -27,7 +27,6 @@ const s = ( sketch ) => {
         if( i == 10  && j == 10) {
           // tissue[i][j] = new AutoCell(i*size, j*size, size, i, j)
           tissue[i][j] = new Cell(i*size, j*size, size, i, j);
-
         }
         else {
           tissue[i][j] = new Cell(i*size, j*size, size, i, j);
@@ -76,7 +75,6 @@ const s = ( sketch ) => {
           switch (AltCellBtn) {
             case 'Dead':
               tissue[i][j] = new DeadCell(i*size, j*size, size, i, j);
-              console.log(tissue[i][j]);
               break;
             case 'Auto':
               tissue[i][j] = new AutoCell(i*size, j*size, size, i, j);
@@ -84,14 +82,12 @@ const s = ( sketch ) => {
             case 'Fast':
               tissue[i][j] = new FastCell(i*size, j*size, size, i, j);
               break;
-            default: 
-              console.log('click')
           }
         }
         // MEASURE 
-        // if( i == 0 && j == 0) {
-        //   console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
-        // }
+        if( i == 12 && j == 16) {
+          console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
+        }
       }      
     }
   };

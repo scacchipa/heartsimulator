@@ -4,7 +4,7 @@ import { AutoCell, DeadCell, FastCell } from './AltCell.js';
 
 window.global = {
   tissue: [],
-  rows: 40,
+  rows: 37,
   cols: 60,
   size: 22,
   AltCellBtn: 'Dead',
@@ -85,9 +85,9 @@ const s = ( sketch ) => {
           }
         }
         // MEASURE 
-        if( i == 12 && j == 16) {
-          console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
-        }
+        // if( i == 12 && j == 16) {
+        //   console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
+        // }
       }      
     }
   };

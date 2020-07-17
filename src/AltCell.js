@@ -15,6 +15,14 @@ class AutoCell extends Cell {
                 break;
        }
     }
+
+    stateColor() {
+        switch (this.state) {
+             case 'resting': return '#feb38b'; //blue'
+             case 'open': return '#F9C80E'; //green
+             case 'inactive': return '#EA3546'; //red
+        }
+   }
 }
 
 class DeadCell extends Cell {

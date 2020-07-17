@@ -2,10 +2,12 @@ import { Cell } from './Cell';
 
 class AutoCell extends Cell {
     calculateAlpha() 
-    {
+    {   
+        let funny_current = 0.00125;
+        
         switch (this.state) {
             case 'resting':
-                this.alpha = this.alpha + 0.05;
+                this.alpha = this.alpha + funny_current;
                 break;
             case 'open':
                 this.alpha = this.alpha + (5 - this.alpha) / 50;

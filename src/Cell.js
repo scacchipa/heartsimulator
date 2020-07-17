@@ -95,7 +95,6 @@ export class Cell  {
                (mY >= this.y) && (mY <=this.y + this.height))
                return true;
           else {
-               console.log("i am not inside")
                return false;
           }
      }

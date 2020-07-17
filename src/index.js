@@ -25,9 +25,8 @@ const s = ( sketch ) => {
       for (let j = 0; j < rows; j++) {
 
         if( i == 10  && j == 10) {
-          tissue[i][j] = new AutoCell(i*size, j*size, size, i, j)
-          // tissue[i][j] = new Cell(i*size, j*size, size, i, j);
-
+          // tissue[i][j] = new AutoCell(i*size, j*size, size, i, j)
+          tissue[i][j] = new Cell(i*size, j*size, size, i, j);
         }
         else {
           tissue[i][j] = new Cell(i*size, j*size, size, i, j);
@@ -86,7 +85,7 @@ const s = ( sketch ) => {
           }
         }
         // MEASURE 
-        if( i == 10 && j == 10) {
+        if( i == 12 && j == 16) {
           console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
         }
       }      

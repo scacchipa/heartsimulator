@@ -3,14 +3,18 @@ import { Cell } from './Cell';
 class AutoCell extends Cell {
     calculateAlpha() 
     {   
-        let funny_current = 0.00125;
-        
+        /*  funny_current
+            determines the heart rate restin > open time
+            PRUDCTION: 0.0015 
+        */
+        let funny_current = 0.0045; 
+
         switch (this.state) {
             case 'resting':
                 this.alpha = this.alpha + funny_current;
                 break;
             case 'open':
-                this.alpha = this.alpha + (5 - this.alpha) / 50;
+                this.alpha = this.alpha + (5 - this.alpha) / 20;
                 break;
             case 'inactive':
                 this.alpha = this.alpha + (0.05 - this.alpha) / 50;
@@ -39,16 +43,18 @@ class DeadCell extends Cell {
 
 class FastCell extends Cell {
     calculateAlpha() {
+        // let propagation_speed = 0.00125;
+
         switch (this.state)
         {
             case 'resting':
-                 this.alpha = this.alpha + (0.09 - this.alpha) / 10; 
+                 this.alpha = this.alpha + (0.05 - this.alpha) / 10; 
                  break;
             case 'open':
-                 this.alpha = this.alpha + (50 - this.alpha) / 50; 
+                 this.alpha = this.alpha + (60 - this.alpha) / 10 ; 
                  break;
             case 'inactive':
-                 this.alpha = this.alpha + (0.05 - this.alpha) / 50; 
+                 this.alpha = this.alpha + (0.05 - this.alpha) / 35; 
                  break;
        }
     }

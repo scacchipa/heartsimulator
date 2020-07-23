@@ -54,7 +54,7 @@ class FastCell extends Cell {
                  this.alpha = this.alpha + (60 - this.alpha) / 10 ; 
                  break;
             case 'inactive':
-                 this.alpha = this.alpha + (0.05 - this.alpha) / 35; 
+                 this.alpha = this.alpha + (0.05 - this.alpha) / 15; 
                  break;
        }
     }

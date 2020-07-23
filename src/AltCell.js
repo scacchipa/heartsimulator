@@ -7,7 +7,7 @@ class AutoCell extends Cell {
             determines the heart rate restin > open time
             PRUDCTION: 0.0015 
         */
-        let funny_current = 0.0045; 
+        let funny_current = 0.0015; 
 
         switch (this.state) {
             case 'resting':
@@ -17,7 +17,7 @@ class AutoCell extends Cell {
                 this.alpha = this.alpha + (5 - this.alpha) / 20;
                 break;
             case 'inactive':
-                this.alpha = this.alpha + (0.05 - this.alpha) / 50;
+                this.alpha = this.alpha + (0.05 - this.alpha) / 30;
                 break;
        }
     }

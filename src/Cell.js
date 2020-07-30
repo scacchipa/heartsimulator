@@ -62,13 +62,18 @@ export class Cell  {
           //centro
           (0.4 * this.tissue[this.colPosition][this.rowPosition].Vm) +
           //arriba
-          (0.15 * this.tissue[this.colPosition][preRow].Vm) +
+          (0.075 * this.tissue[this.colPosition][preRow].Vm) +
           //abajo
-          (0.15 * this.tissue[this.colPosition][postRow].Vm) +
+          (0.075 * this.tissue[this.colPosition][postRow].Vm) +
           //derecha
-          (0.15 * this.tissue[preCol][this.rowPosition].Vm) +
+          (0.075 * this.tissue[preCol][this.rowPosition].Vm) +
           //izquierda
-          (0.15 * this.tissue[postCol][this.rowPosition].Vm);
+          (0.075 * this.tissue[postCol][this.rowPosition].Vm) +
+          //Diagonals
+          (0.075 * this.tissue[postCol][postRow].Vm) + 
+          (0.075 * this.tissue[postCol][preRow].Vm) + 
+          (0.075 * this.tissue[preCol][preRow].Vm) + 
+          (0.075 * this.tissue[preCol][postRow].Vm);
 
           this.updateState();
      }

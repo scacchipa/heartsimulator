@@ -69,14 +69,12 @@ export class Cell  {
           (0.075 * this.tissue[preCol][this.rowPosition].Vm) +
           //izquierda
           (0.075 * this.tissue[postCol][this.rowPosition].Vm) +
-
+          //Diagonals
           (0.075 * this.tissue[postCol][postRow].Vm) + 
           (0.075 * this.tissue[postCol][preRow].Vm) + 
           (0.075 * this.tissue[preCol][preRow].Vm) + 
           (0.075 * this.tissue[preCol][postRow].Vm);
-
-
-
+          
           this.updateState();
      }
 

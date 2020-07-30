@@ -40,6 +40,19 @@ const s = ( sketch ) => {
     sketch.fill(cell.stateColor());
   }
 
+  // function for_tissue(){
+  //   for (let i = 0; i < cols; i++) {
+  //     for (let j = 0; j < rows; j++) {
+  //       let cell = tissue[i][j];
+
+  //       cell.membranePotential();
+  //       cell.calculateAlpha();
+  //       cell.calculateCharge();
+  //       paint(cell);
+
+  //     }      
+  //   }
+  // }
   sketch.setup = () => {  
     let cvn_height = (size * (cols - 2));
     let cvn_width = (size * (rows-2));
@@ -57,7 +70,7 @@ const s = ( sketch ) => {
 
     let play = window.global.play;
     let AltCellBtn = window.global.AltCellBtn;
-
+          
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         let cell = tissue[i][j];

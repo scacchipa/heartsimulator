@@ -7,7 +7,7 @@ window.global = {
   rows: 37,
   cols: 60,
   size: 22,
-  AltCellBtn: 'Dead',
+  AltCellBtn: 'Auto',
   play: false,
   stop: false
 };

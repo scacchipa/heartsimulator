@@ -33,28 +33,27 @@
           </div>
 
           <div class="card-footer bg-transparent">
-            <div class="mt-2 mb-2">
-         
 
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-warning transform" data-type="Auto" >
-                  <input type="radio"  autocomplete="off" checked> Auto
-                </label>
-                <label class="btn btn-light transform" data-type="Fast">
-                  <input type="radio"  autocomplete="off"> Fast
-                </label>
-                <label class="btn btn-dark transform" data-type="Dead">
-                  <input type="radio" autocomplete="off"> Dead
-                </label>
+              <div class="row mt-2 mb-2">
+                <div class="col-4">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-warning transform" data-type="Auto" >
+                      <input type="radio" focus active> Auto
+                    </label>
+                    <label class="btn btn-light transform" data-type="Fast">
+                      <input type="radio"> Fast
+                    </label>
+                    <label class="btn btn-dark transform" data-type="Dead">
+                      <input type="radio"> Dead
+                    </label>
+                  </div>  
+                  
+                  <button id="play" type="button" class="btn btn-primary ml-3 pause"> <img src="https://img.icons8.com/material-rounded/24/000000/play.png"/></button>  
+                  <button id="stop" type="button" class="btn btn-danger stop"> <img src="https://img.icons8.com/material/24/000000/stop.png"/></button>   
+
+                </div>
               </div>
-
-              <button id="play" type="button" class="btn btn-primary ml-3 play">Play <img src="https://img.icons8.com/material-rounded/24/000000/play.png"/></button>  
-              <button id="stop" type="button" class="btn btn-primary ml-1 stop"> <img src="https://img.icons8.com/material/24/000000/stop--v1.png"/></button>   
-
-
-            </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -83,20 +82,26 @@
 
       $('#stop').on('click', function(){
         window.global.stop = true;
-        manage_pay($('#play'));
+        let target = $('#play');
+
+        if($(target).hasClass('play'))
+        { 
+          console.log('play')
+          manage_pay(target);
+        }
       })
 
       function manage_pay(e){
         window.global.play = (!window.global.play); 
         if($(e).hasClass('pause'))
         {
-          $(e).html('Play <img src="https://img.icons8.com/material-rounded/24/000000/play.png"/>')
-          $(e).toggleClass('pause')
+          $(e).html('<img src="https://img.icons8.com/material-rounded/24/000000/pause.png"/>')
+          $(e).toggleClass('pause play')
         }
         else
         {
-          $(e).html('Pause <img src="https://img.icons8.com/material-rounded/24/000000/pause.png"/>')
-          $(e).toggleClass('pause')
+          $(e).html('<img src="https://img.icons8.com/material-rounded/24/000000/play.png"/>')
+          $(e).toggleClass('play pause')
         }
       }
     </script>

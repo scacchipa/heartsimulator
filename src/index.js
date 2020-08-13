@@ -2,6 +2,42 @@ import p5 from 'p5';
 import {Cell} from './Cell.js';
 import { AutoCell, DeadCell, FastCell } from './AltCell.js';
 
+class Tissue {
+  constructor(xSize, ySize) {
+
+    let boxSize = window.global.size;
+    this.xSize = xSize;
+    this.ySize = ySize;
+    this.tissue = [];
+
+    for (let i = 0; i < this.xSize; i++) {
+      this.tissue[i] = [];
+  
+      for (let j = 0; j < this.ySize; j++) {
+        if( i == 10  && j == 10) {
+          this.tissue[i][j] = new Cell(i*boxSize, j*boxSize, boxSize, i, j);
+        }
+        else {
+          this.tissue[i][j] = new Cell(i*boxSize, j*boxSize, boxSize, i, j);
+        }
+      }
+    }
+  }
+  getCell(x, y) {
+    return this.tissue[x][y];
+  }
+  setCell(x, y, cell) {
+    this.tissue[x][y] = cell;
+  }
+  forAll(func) {
+    for (let x = 0; x < this.xSize; x++) 
+      for(let y = 0; y < this.ySize; y++) {
+        console.log(x,"-", y);
+        func.call(this.tissue[x][y]);
+    }
+  }
+}
+
 window.global = {
   tissue: [],
   rows: 37,
@@ -17,49 +53,18 @@ const s = ( sketch ) => {
   let cols = window.global.cols;
   let size = window.global.size;
 
-  function create_grid_cell() {
-
-    for (let i = 0; i < cols; i++) {
-      tissue[i] = [];
-
-      for (let j = 0; j < rows; j++) {
-
-        if( i == 10  && j == 10) {
-          // tissue[i][j] = new AutoCell(i*size, j*size, size, i, j)
-          tissue[i][j] = new Cell(i*size, j*size, size, i, j);
-        }
-        else {
-          tissue[i][j] = new Cell(i*size, j*size, size, i, j);
-        }
-      }      
-    }
-  }
-
-  function paint(cell) {
+   function paint(cell) {
     sketch.rect(cell.x, cell.y, cell.width, cell.height);
     sketch.fill(cell.stateColor());
   }
 
-  // function for_tissue(){
-  //   for (let i = 0; i < cols; i++) {
-  //     for (let j = 0; j < rows; j++) {
-  //       let cell = tissue[i][j];
-
-  //       cell.membranePotential();
-  //       cell.calculateAlpha();
-  //       cell.calculateCharge();
-  //       paint(cell);
-
-  //     }      
-  //   }
-  // }
   sketch.setup = () => {  
     let cvn_height = (size * (cols - 2));
     let cvn_width = (size * (rows-2));
 
     sketch.createCanvas(cvn_height, cvn_width);
 
-    create_grid_cell();
+    window.global.tissue = new Tissue(cols, rows);
   };
 
   sketch.draw = () => {
@@ -70,37 +75,35 @@ const s = ( sketch ) => {
 
     let play = window.global.play;
     let AltCellBtn = window.global.AltCellBtn;
-          
+    
+    if (play == true) {
+      window.global.tissue.forAll( function() { this.membranePotential() } );
+      window.global.tissue.forAll( function() { this.calculateAlpha() } );
+      window.global.tissue.forAll( function() { this.calculateCharge() } );
+    }
+
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
-        let cell = tissue[i][j];
-        
-        if (play == true) {
-          cell.membranePotential();
-          cell.calculateAlpha();
-          cell.calculateCharge();
-        }
+        let cell = window.global.tissue.getCell(i, j);
         
         paint(cell);
-        
+        if (cell.isInSide(sketch.mouseX, sketch.mouseY)) {
+            console.log(i,", ", j, ": ", cell.Vm);
+        }
         if (sketch.mouseIsPressed && cell.isInSide(sketch.mouseX, sketch.mouseY)) 
         { 
           switch (AltCellBtn) {
             case 'Dead':
-              tissue[i][j] = new DeadCell(i*size, j*size, size, i, j);
+              window.global.tissue.setCell(i, j, new DeadCell(i*size, j*size, size, i, j));
               break;
             case 'Auto':
-              tissue[i][j] = new AutoCell(i*size, j*size, size, i, j);
+              window.global.tissue.setCell(i, j, new AutoCell(i*size, j*size, size, i, j));
               break;
             case 'Fast':
-              tissue[i][j] = new FastCell(i*size, j*size, size, i, j);
+              window.global.tissue.setCell(i, j, new FastCell(i*size, j*size, size, i, j));
               break;
           }
         }
-        // MEASURE 
-        // if( i == 12 && j == 16) {
-        //   console.log(cell.alpha, cell.state, cell.Vm, cell.charge)
-        // }
       }      
     }
   };

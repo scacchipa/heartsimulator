@@ -15,7 +15,7 @@ export class Cell  {
           this.Ni = 15;
 
           this.Vm = this.membranePotential();
-          this.charge = 0;
+          this.charge = this.membranePotential();
 
           this.tissue = window.global.tissue;
           this.rows = window.global.rows;
@@ -75,7 +75,6 @@ export class Cell  {
           (0.075 * this.getTissue().getCell(preCol,preRow).Vm) + 
           (0.075 * this.getTissue().getCell(preCol, postRow).Vm);
           
-          this.updateState();
      }
 
      updateState() {

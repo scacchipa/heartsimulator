@@ -32,7 +32,6 @@ class Tissue {
   forAll(func) {
     for (let x = 0; x < this.xSize; x++) 
       for(let y = 0; y < this.ySize; y++) {
-        console.log(x,"-", y);
         func.call(this.tissue[x][y]);
     }
   }
@@ -80,6 +79,7 @@ const s = ( sketch ) => {
       window.global.tissue.forAll( function() { this.membranePotential() } );
       window.global.tissue.forAll( function() { this.calculateAlpha() } );
       window.global.tissue.forAll( function() { this.calculateCharge() } );
+      window.global.tissue.forAll( function() { this.updateState() } );
     }
 
     for (let i = 0; i < cols; i++) {
@@ -88,7 +88,7 @@ const s = ( sketch ) => {
         
         paint(cell);
         if (cell.isInSide(sketch.mouseX, sketch.mouseY)) {
-            console.log(i,", ", j, ": ", cell.Vm);
+            console.log("Alfa: ", cell.alpha, "Coord", i,", ", j, ": ", cell.Vm);
         }
         if (sketch.mouseIsPressed && cell.isInSide(sketch.mouseX, sketch.mouseY)) 
         { 

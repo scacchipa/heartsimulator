@@ -8,7 +8,8 @@ window.global = {
   cols: 60,
   size: 22,
   AltCellBtn: 'Dead',
-  play: false
+  play: false,
+  stop: false
 };
 
 const s = ( sketch ) => {
@@ -63,6 +64,12 @@ const s = ( sketch ) => {
 
   sketch.draw = () => {
     sketch.background(0);
+   
+    if (window.global.stop == true)
+    {
+      create_grid_cell();
+      window.global.stop = false ;
+    } 
 
     //Shifts canvas to remove 2top rows and col.
     sketch.translate((size * -1), (size * -2))

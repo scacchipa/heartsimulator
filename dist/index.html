@@ -48,7 +48,9 @@
                 </label>
               </div>
 
-              <button id="play" type="button" class="btn btn-primary ml-3 play">Play <img src="https://img.icons8.com/material-rounded/24/000000/play.png"/></button>   
+              <button id="play" type="button" class="btn btn-primary ml-3 play">Play <img src="https://img.icons8.com/material-rounded/24/000000/play.png"/></button>  
+              <button id="stop" type="button" class="btn btn-primary ml-1 stop"> <img src="https://img.icons8.com/material/24/000000/stop--v1.png"/></button>   
+
 
             </div>
           </div>
@@ -69,28 +71,34 @@
     <script>
 
       //Play stop
-      $('#play').on('click', function(){
-        window.global.play = (!window.global.play); 
-        if($(this).hasClass('stop'))
-        {
-          $(this).html('Play <img src="https://img.icons8.com/material-rounded/24/000000/play.png"/>')
-          $(this).toggleClass('stop')
-        }
-        else
-        {
-          $(this).html('Stop <img src="https://img.icons8.com/material-rounded/24/000000/pause.png"/>')
-          $(this).toggleClass('stop')
-
-        }
+      $('#play').on('click', function(e){
+        manage_pay(e.currentTarget);
       })
 
       //Trasformation click
       $('.transform').on('click', function () {
-
-
         let type =$(this).data('type');
         window.global.AltCellBtn = type;
       })
+
+      $('#stop').on('click', function(){
+        window.global.stop = true;
+        manage_pay($('#play'));
+      })
+
+      function manage_pay(e){
+        window.global.play = (!window.global.play); 
+        if($(e).hasClass('pause'))
+        {
+          $(e).html('Play <img src="https://img.icons8.com/material-rounded/24/000000/play.png"/>')
+          $(e).toggleClass('pause')
+        }
+        else
+        {
+          $(e).html('Pause <img src="https://img.icons8.com/material-rounded/24/000000/pause.png"/>')
+          $(e).toggleClass('pause')
+        }
+      }
     </script>
   </body>
 </html>

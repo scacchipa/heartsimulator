@@ -8,7 +8,7 @@ window.global = {
   cols: 60,
   size: 22,
   AltCellBtn: 'Dead',
-  play: true
+  play: false
 };
 
 const s = ( sketch ) => {

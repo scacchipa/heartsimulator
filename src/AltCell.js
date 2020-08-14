@@ -32,8 +32,12 @@ class AutoCell extends Cell {
 }
 
 class DeadCell extends Cell {
+    constructor(_x, _y, _s,  _colPosition, _rowPosition){
+        super(_x, _y, _s,  _colPosition, _rowPosition);
+    }
+
     calculateAlpha() {
-        this.alpha = .1;
+        this.alpha = .05;
    }
 
     stateColor() {
@@ -42,6 +46,7 @@ class DeadCell extends Cell {
 }
 
 class FastCell extends Cell {
+    
     calculateAlpha() {
         // let propagation_speed = 0.00125;
 

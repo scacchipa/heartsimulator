@@ -7,8 +7,9 @@ window.global = {
   rows: 37,
   cols: 60,
   size: 22,
-  AltCellBtn: 'Dead',
-  play: true
+  AltCellBtn: 'Auto',
+  play: false,
+  stop: false
 };
 
 const s = ( sketch ) => {
@@ -33,7 +34,7 @@ const s = ( sketch ) => {
 
   sketch.draw = () => {
     sketch.background(0);
-
+   
     //Shifts canvas to remove 2top rows and col.
     sketch.translate((size * -1), (size * -2))
 
@@ -47,6 +48,12 @@ const s = ( sketch ) => {
       tissue.forAll( function() { this.calculateCharge() } );
       tissue.forAll( function() { this.updateState() } );
     }
+
+    if (window.global.stop == true)
+    {
+      tissue.create_grid_cell();
+      window.global.stop = false ;
+    } 
 
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {

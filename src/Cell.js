@@ -48,7 +48,7 @@ export class Cell  {
           }
      }
 
-     calculateCharge() {
+     calculateCharge(cell) {
           if (this.colPosition < 1 || this.colPosition >= (this.cols-1) || this.rowPosition < 1 || this.rowPosition >= (this.rows-1)) {
                return; 
           }
@@ -102,6 +102,7 @@ export class Cell  {
                return false;
           }
      }
+
      getTissue() {
           return window.global.tissue;
      }

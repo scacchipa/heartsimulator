@@ -1,41 +1,6 @@
 import p5 from 'p5';
-import {Cell} from './Cell.js';
+import {Tissue} from './Tissue.js';
 import { AutoCell, DeadCell, FastCell } from './AltCell.js';
-
-class Tissue {
-  constructor(xSize, ySize) {
-
-    let boxSize = window.global.size;
-    this.xSize = xSize;
-    this.ySize = ySize;
-    this.tissue = [];
-
-    for (let i = 0; i < this.xSize; i++) {
-      this.tissue[i] = [];
-  
-      for (let j = 0; j < this.ySize; j++) {
-        if( i == 10  && j == 10) {
-          this.tissue[i][j] = new Cell(i*boxSize, j*boxSize, boxSize, i, j);
-        }
-        else {
-          this.tissue[i][j] = new Cell(i*boxSize, j*boxSize, boxSize, i, j);
-        }
-      }
-    }
-  }
-  getCell(x, y) {
-    return this.tissue[x][y];
-  }
-  setCell(x, y, cell) {
-    this.tissue[x][y] = cell;
-  }
-  forAll(func) {
-    for (let x = 0; x < this.xSize; x++) 
-      for(let y = 0; y < this.ySize; y++) {
-        func.call(this.tissue[x][y]);
-    }
-  }
-}
 
 window.global = {
   tissue: [],
@@ -74,17 +39,18 @@ const s = ( sketch ) => {
 
     let play = window.global.play;
     let AltCellBtn = window.global.AltCellBtn;
-    
+    let tissue = window.global.tissue;
+
     if (play == true) {
-      window.global.tissue.forAll( function() { this.membranePotential() } );
-      window.global.tissue.forAll( function() { this.calculateAlpha() } );
-      window.global.tissue.forAll( function() { this.calculateCharge() } );
-      window.global.tissue.forAll( function() { this.updateState() } );
+      tissue.forAll( function() { this.membranePotential } );
+      tissue.forAll( function() { this.calculateAlpha() } );
+      tissue.forAll( function() { this.calculateCharge() } );
+      tissue.forAll( function() { this.updateState() } );
     }
 
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
-        let cell = window.global.tissue.getCell(i, j);
+        let cell = tissue.getCell(i, j);
         
         paint(cell);
         if (cell.isInSide(sketch.mouseX, sketch.mouseY)) {
@@ -94,13 +60,13 @@ const s = ( sketch ) => {
         { 
           switch (AltCellBtn) {
             case 'Dead':
-              window.global.tissue.setCell(i, j, new DeadCell(i*size, j*size, size, i, j));
+              tissue.setCell(i, j, new DeadCell(i*size, j*size, size, i, j));
               break;
             case 'Auto':
-              window.global.tissue.setCell(i, j, new AutoCell(i*size, j*size, size, i, j));
+              tissue.setCell(i, j, new AutoCell(i*size, j*size, size, i, j));
               break;
             case 'Fast':
-              window.global.tissue.setCell(i, j, new FastCell(i*size, j*size, size, i, j));
+              tissue.setCell(i, j, new FastCell(i*size, j*size, size, i, j));
               break;
           }
         }
@@ -109,6 +75,5 @@ const s = ( sketch ) => {
   };
 };
 
-let tissue = window.global.tissue;
 let myp5 = new p5(s, 'chart');
  

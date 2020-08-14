@@ -15,7 +15,7 @@ export class Cell  {
           this.Ni = 15;
 
           this.Vm = this.membranePotential();
-          this.charge = 0;
+          this.charge = this.membranePotential();
 
           this.tissue = window.global.tissue;
           this.rows = window.global.rows;
@@ -48,7 +48,7 @@ export class Cell  {
           }
      }
 
-     calculateCharge() {
+     calculateCharge(cell) {
           if (this.colPosition < 1 || this.colPosition >= (this.cols-1) || this.rowPosition < 1 || this.rowPosition >= (this.rows-1)) {
                return; 
           }
@@ -60,22 +60,21 @@ export class Cell  {
 
           this.charge =
           //centro
-          (0.4 * this.tissue[this.colPosition][this.rowPosition].Vm) +
+          (0.4 * this.getTissue().getCell(this.colPosition, this.rowPosition).Vm) +
           //arriba
-          (0.15 * this.tissue[this.colPosition][preRow].Vm) +
+          (0.075 * this.getTissue().getCell(this.colPosition, preRow).Vm) +
           //abajo
-          (0.15 * this.tissue[this.colPosition][postRow].Vm) +
+          (0.075 * this.getTissue().getCell(this.colPosition, postRow).Vm) +
           //derecha
-          (0.15 * this.tissue[preCol][this.rowPosition].Vm) +
+          (0.075 * this.getTissue().getCell(preCol, this.rowPosition).Vm) +
           //izquierda
-          (0.15 * this.tissue[postCol][this.rowPosition].Vm)
+          (0.075 * this.getTissue().getCell(postCol, this.rowPosition).Vm) +
           //Diagonals
-          (0.075 * this.tissue[postCol][postRow].Vm) + 
-          (0.075 * this.tissue[postCol][preRow].Vm) + 
-          (0.075 * this.tissue[preCol][preRow].Vm) + 
-          (0.075 * this.tissue[preCol][postRow].Vm);
+          (0.075 * this.getTissue().getCell(postCol, postRow).Vm) + 
+          (0.075 * this.getTissue().getCell(postCol, preRow).Vm) + 
+          (0.075 * this.getTissue().getCell(preCol,preRow).Vm) + 
+          (0.075 * this.getTissue().getCell(preCol, postRow).Vm);
           
-          this.updateState();
      }
 
      updateState() {
@@ -102,5 +101,9 @@ export class Cell  {
           else {
                return false;
           }
+     }
+
+     getTissue() {
+          return window.global.tissue;
      }
 }

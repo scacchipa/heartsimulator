@@ -42,7 +42,7 @@ const s = ( sketch ) => {
     let tissue = window.global.tissue;
 
     if (play == true) {
-      tissue.forAll( function() { this.membranePotential } );
+      tissue.forAll( function() { this.membranePotential() } );
       tissue.forAll( function() { this.calculateAlpha() } );
       tissue.forAll( function() { this.calculateCharge() } );
       tissue.forAll( function() { this.updateState() } );

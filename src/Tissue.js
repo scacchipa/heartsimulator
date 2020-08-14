@@ -21,12 +21,15 @@ export class Tissue {
         }
       }
     }
+
     getCell(x, y) {
       return this.tissue[x][y];
     }
+    
     setCell(x, y, cell) {
       this.tissue[x][y] = cell;
     }
+    
     forAll(func) {
       for (let x = 0; x < this.xSize; x++) 
         for(let y = 0; y < this.ySize; y++) {

@@ -48,7 +48,7 @@ export class Cell  {
           }
      }
 
-     calculateCharge(cell) {
+     calculateCharge() {
           if (this.colPosition < 1 || this.colPosition >= (this.cols-1) || this.rowPosition < 1 || this.rowPosition >= (this.rows-1)) {
                return; 
           }

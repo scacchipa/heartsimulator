@@ -17,6 +17,13 @@ export class Cell  {
           this.Vm = this.membranePotential();
           this.charge = this.membranePotential();
 
+          let higherAlpha = 5;
+          let lowerAlpha = 0.05;
+          this.higherAlpha = higherAlpha;
+          this.lowerAlpha = lowerAlpha;
+          this.despolarizationSlope = (higherAlpha - lowerAlpha) / 1000;
+          this.repolarizationSlope = (lowerAlpha - higherAlpha) / 1000;
+
           this.tissue = window.global.tissue;
           this.rows = window.global.rows;
           this.cols = window.global.cols
@@ -35,15 +42,16 @@ export class Cell  {
      }
 
      calculateAlpha() {
+ 
           switch (this.state) {
                case 'resting':
-                    this.alpha = this.alpha + (0.05 - this.alpha) / 10; 
+                    this.alpha = this.alpha = this.alpha + (0.05 - this.alpha) / 10; 
                     break;
                case 'open':
-                    this.alpha = this.alpha + (50 - this.alpha) / 50; 
+                    this.alpha = Math.min(this.alpha + this.despolarizationSlope, this.higherAlpha); 
                     break;
                case 'inactive':
-                    this.alpha = this.alpha + (0.05 - this.alpha) / 20; 
+                    this.alpha = Math.max(this. alpha + this.repolarizationSlope, this.lowerAlpha);
                     break;
           }
      }
@@ -81,7 +89,7 @@ export class Cell  {
           if (this.state == 'resting' && this.charge > -50) {
                this.state = 'open';
              }
-          else if (this.state == 'open' && this.charge > -20) {
+          else if (this.state == 'open' && this.charge > +5) {
                this.state = 'inactive';
           }
           else if (this.state == 'inactive' && this.charge < -55) {
@@ -102,7 +110,6 @@ export class Cell  {
                return false;
           }
      }
-
      getTissue() {
           return window.global.tissue;
      }

@@ -1,20 +1,26 @@
 import { Cell } from './Cell';
 
 class AutoCell extends Cell {
+    
+    constructor(_x, _y, _s,  _colPosition, _rowPosition) {
+        super(_x, _y, _s,  _colPosition, _rowPosition);
+
+        let higherAlpha = 5;
+        let lowerAlpha = 0.05;
+        this.higherAlpha = higherAlpha;
+        this.lowerAlpha = lowerAlpha;
+        this.funnySlope = 0.0015;
+        this.despolarizationSlope = (this.lowerApha - this.higherAlpha) / 2000;
+        this.repolarizationSlope = (this.higherAlpha - this.lowerAlpha) / 2000;
+    }
     calculateAlpha() 
     {   
-        /*  funny_current
-            determines the heart rate restin > open time
-            PRUDCTION: 0.0015 
-        */
-        let funny_current = 0.0025; 
-
         switch (this.state) {
             case 'resting':
-                this.alpha = this.alpha + funny_current;
+                this.alpha = Math.min(this.alpha + this.funnySlope, this.higherAlpha);
                 break;
             case 'open':
-                this.alpha = this.alpha + (5 - this.alpha) / 20;
+                this.alpha = this.alpha + (5 - this.alpha) / 300;
                 break;
             case 'inactive':
                 this.alpha = this.alpha + (0.05 - this.alpha) / 30;
@@ -32,13 +38,9 @@ class AutoCell extends Cell {
 }
 
 class DeadCell extends Cell {
-    constructor(_x, _y, _s,  _colPosition, _rowPosition){
-        super(_x, _y, _s,  _colPosition, _rowPosition);
-    }
-
     calculateAlpha() {
         this.alpha = .05;
-   }
+    }
 
     stateColor() {
         return '#000000'; 
@@ -46,21 +48,27 @@ class DeadCell extends Cell {
 }
 
 class FastCell extends Cell {
-    
+    constructor(_x, _y, _s,  _colPosition, _rowPosition) {
+        super(_x, _y, _s,  _colPosition, _rowPosition);
+        let higherAlpha = 5;
+        let lowerAlpha = 0.05;
+        this.higherAlpha = higherAlpha;
+        this.lowerAlpha = lowerAlpha;
+        this.despolarizationSlope = (higherAlpha - lowerAlpha) / 20;
+        this.repolarizationSlope = (lowerAlpha - higherAlpha) / 1000;
+    }
     calculateAlpha() {
-        // let propagation_speed = 0.00125;
-
         switch (this.state)
         {
             case 'resting':
-                 this.alpha = this.alpha + (0.05 - this.alpha) / 10; 
-                 break;
+                this.alpha = this.alpha = this.alpha + (0.05 - this.alpha) / 10;
+                break;
             case 'open':
-                 this.alpha = this.alpha + (60 - this.alpha) / 10 ; 
-                 break;
+                this.alpha = Math.min(this.alpha + this.despolarizationSlope, this.higherAlpha);  
+                break;
             case 'inactive':
-                 this.alpha = this.alpha + (0.05 - this.alpha) / 15; 
-                 break;
+                this.alpha = Math.max(this. alpha + this.repolarizationSlope, this.lowerAlpha);
+                break;
        }
     }
 

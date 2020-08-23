@@ -2,7 +2,6 @@ import {Cell} from './Cell.js';
 
 export class Tissue {
     constructor(xSize, ySize) {
-  
       this.xSize = xSize;
       this.ySize = ySize;
       this.tissue = [];
@@ -15,14 +14,8 @@ export class Tissue {
       
       for (let i = 0; i < this.xSize; i++) {
         this.tissue[i] = [];
-    
         for (let j = 0; j < this.ySize; j++) {
-          if( i == 10  && j == 10) {
-            this.tissue[i][j] = new Cell(i*boxSize, j*boxSize, boxSize, i, j);
-          }
-          else {
-            this.tissue[i][j] = new Cell(i*boxSize, j*boxSize, boxSize, i, j);
-          }
+          this.tissue[i][j] = new Cell(i*boxSize, j*boxSize, boxSize, i, j);
         }
       }
     }
@@ -32,10 +25,32 @@ export class Tissue {
     }
     
     setCell(x, y, cell) {
-      console.log(cell)
       this.tissue[x][y] = cell;
+      this.refreshReference();
     }
 
+    refreshReference() {
+      this.forAll( function () {
+        let x = this.colPosition;
+        let y = this.rowPosition;
+        let xSize = this.cols;
+        let ySize = this.rows;
+        let tissue = this.getTissue();
+
+        if (y > 0) this.upperCell = tissue.getCell(x, y - 1);
+        if (y < ySize - 1) this.lowerCell = tissue.getCell(x, y + 1);
+        if (x > 0) {
+          this.leftCell = tissue.getCell(x - 1, y);
+          if (y < ySize - 1) this.lowerLeftCell = tissue.getCell(x - 1, y + 1);
+          if (y > 0) this.upperLeftCell = tissue.getCell(x - 1, y - 1);
+        }
+        if (x < xSize - 1) {
+          this.rightCell = tissue.getCell(x + 1, y);
+          if (y > 0) this.upperRightCell = tissue.getCell(x + 1, y - 1);
+          if (y < ySize - 1) this.lowerRightCell = tissue.getCell(x + 1, y + 1);
+        }
+      });
+    }
     forAll(func) {
       for (let x = 0; x < this.xSize; x++) 
         for(let y = 0; y < this.ySize; y++) {

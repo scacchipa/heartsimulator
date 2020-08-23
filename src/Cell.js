@@ -24,7 +24,6 @@ export class Cell  {
           this.despolarizationSlope = (higherAlpha - lowerAlpha) / 1000;
           this.repolarizationSlope = (lowerAlpha - higherAlpha) / 1000;
 
-          this.tissue = window.global.tissue;
           this.rows = window.global.rows;
           this.cols = window.global.cols
      }
@@ -61,28 +60,22 @@ export class Cell  {
                return; 
           }
 
-          let preCol  = this.colPosition - 1;
-          let postCol = this.colPosition + 1;
-          let preRow  = this.rowPosition - 1;
-          let postRow = this.rowPosition + 1;
-
           this.charge =
           //centro
-          (0.4 * this.getTissue().getCell(this.colPosition, this.rowPosition).Vm) +
+          (0.4 * this.Vm) +
           //arriba
-          (0.075 * this.getTissue().getCell(this.colPosition, preRow).Vm) +
+          (0.075 * this.upperCell.Vm) +
           //abajo
-          (0.075 * this.getTissue().getCell(this.colPosition, postRow).Vm) +
+          (0.075 * this.lowerCell.Vm) +
           //derecha
-          (0.075 * this.getTissue().getCell(preCol, this.rowPosition).Vm) +
+          (0.075 * this.leftCell.Vm) +
           //izquierda
-          (0.075 * this.getTissue().getCell(postCol, this.rowPosition).Vm) +
+          (0.075 * this.rightCell.Vm) +
           //Diagonals
-          (0.075 * this.getTissue().getCell(postCol, postRow).Vm) + 
-          (0.075 * this.getTissue().getCell(postCol, preRow).Vm) + 
-          (0.075 * this.getTissue().getCell(preCol,preRow).Vm) + 
-          (0.075 * this.getTissue().getCell(preCol, postRow).Vm);
-          
+          (0.075 * this.lowerRightCell.Vm) + 
+          (0.075 * this.upperRightCell.Vm) + 
+          (0.075 * this.upperLeftCell.Vm) +
+          (0.075 * this.lowerLeftCell.Vm);
      }
 
      updateState() {

@@ -4,9 +4,9 @@ import { AutoCell, DeadCell, FastCell } from './AltCell.js';
 
 window.global = {
   tissue: [],
-  rows: 37,
+  rows: 45,
   cols: 60,
-  size: 22,
+  size: 20,
   AltCellBtn: 'Auto',
   play: false,
   stop: false

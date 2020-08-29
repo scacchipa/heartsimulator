@@ -23,7 +23,7 @@ function mobile() {
 function calculateRows() {
   if(mobile()) 
   { 
-    return Math.floor(window.innerHeight / window.global.size) - 10;
+    return Math.floor(window.innerHeight / window.global.size) - 8;
   }
   else return 40;
 }

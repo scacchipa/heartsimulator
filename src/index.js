@@ -4,9 +4,6 @@ import { AutoCell, DeadCell, FastCell } from './AltCell.js';
 
 window.global = {
   tissue: [],
-  rows: 40,
-  cols: 60,
-  size: 20,
   AltCellBtn: 'Auto',
   play: false,
   stop: false
@@ -61,7 +58,7 @@ const s = ( sketch ) => {
         
         paint(cell);
         if (cell.isInSide(sketch.mouseX, sketch.mouseY)) {
-            console.log("Alfa: ", cell.alpha, "Coord", i,", ", j, ": ", cell.Vm);
+            // console.log("Alfa: ", cell.alpha, "Coord", i,", ", j, ": ", cell.Vm);
         }
         if (sketch.mouseIsPressed && cell.isInSide(sketch.mouseX, sketch.mouseY)) 
         { 
@@ -81,6 +78,33 @@ const s = ( sketch ) => {
     }
   };
 };
+
+function mobile() {
+  if (/Mobi|Android/i.test(navigator.userAgent)) {
+    window.global.size = 15;
+    return true; 
+  }   
+  else window.global.size = 20;
+}
+
+function calculateRows() {
+  if(mobile()) 
+  { 
+    return Math.floor(window.innerHeight / window.global.size) - 10;
+  }
+  else return 40;
+}
+
+function calculateCols(){
+  if(mobile())
+  {
+    return Math.floor(window.innerWidth / window.global.size) +1 ;
+  }
+  else return 60;
+}
+
+window.global.rows = calculateRows();
+window.global.cols = calculateCols();
 
 let myp5 = new p5(s, 'chart');
  

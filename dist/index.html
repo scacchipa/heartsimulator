@@ -8,6 +8,7 @@
 
       body{
         background-color: #EEEEEE;
+        overflow: hidden;
       }
 
       #bottons {
@@ -28,6 +29,11 @@
           width:95%;
         }
       } 
+      @media (max-width: 767.98px) { 
+        #cells-btns {
+          padding-top: 10px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -53,7 +59,7 @@
                   <button id="play" type="button" class="btn btn-primary pause"> <img src="https://img.icons8.com/material-rounded/24/000000/play.png"/></button>  
                   <button id="stop" type="button" class="btn btn-danger mr-3 stop"> <img src="https://img.icons8.com/material/24/000000/stop.png"/></button>   
 
-                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <div id="cells-btns" class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-warning transform" data-type="Auto" >
                       <input type="radio" focus active> Auto
                     </label>

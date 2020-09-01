@@ -37,7 +37,7 @@ export class Cell  {
      calculateAlpha() {
           switch (this.state) {
                case 'resting':
-                    this.alpha = this.alpha + (0.05 - this.alpha) / 10; 
+                    this.alpha = this.alpha + (0.048 - this.alpha) / 15; 
                     break;
                case 'open':
                     this.alpha = this.alpha + (50 - this.alpha) / 50; 

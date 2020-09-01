@@ -46,14 +46,24 @@ class DeadCell extends Cell {
 }
 
 class FastCell extends Cell {
-    
+    updateState() {
+        if (this.state == 'resting' && this.charge > -55) {
+             this.state = 'open';
+           }
+        else if (this.state == 'open' && this.charge > -20) {
+             this.state = 'inactive';
+        }
+        else if (this.state == 'inactive' && this.charge < -55) {
+             this.state = 'resting';
+        }
+   }
+
     calculateAlpha() {
         // let propagation_speed = 0.00125;
-
         switch (this.state)
         {
             case 'resting':
-                 this.alpha = this.alpha + (0.05 - this.alpha) / 10; 
+                 this.alpha = this.alpha + (0.07 - this.alpha); 
                  break;
             case 'open':
                  this.alpha = this.alpha + (60 - this.alpha) / 10 ; 

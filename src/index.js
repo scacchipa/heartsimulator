@@ -17,7 +17,7 @@ function mobile() {
     window.global.size = 15;
     return true; 
   }   
-  else window.global.size = 20;
+  else window.global.size = 15;
 }
 
 function calculateRows() {
@@ -25,7 +25,7 @@ function calculateRows() {
   { 
     return Math.floor(window.innerHeight / window.global.size) - 8;
   }
-  else return 40;
+  else return 50;
 }
 
 function calculateCols(){
@@ -33,7 +33,7 @@ function calculateCols(){
   {
     return Math.floor(window.innerWidth / window.global.size) +1 ;
   }
-  else return 60;
+  else return 70;
 }
 
 

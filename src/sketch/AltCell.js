@@ -63,7 +63,7 @@ class FastCell extends Cell {
         switch (this.state)
         {
             case 'resting':
-                 this.alpha = this.alpha + (0.07 - this.alpha); 
+                 this.alpha = this.alpha + (0.09 - this.alpha); 
                  break;
             case 'open':
                  this.alpha = this.alpha + (60 - this.alpha) / 10 ; 

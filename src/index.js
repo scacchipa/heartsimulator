@@ -1,6 +1,8 @@
 import p5 from 'p5';
-import {Tissue} from './Tissue.js';
+import { Tissue } from './Tissue.js';
+import { Cell } from './Cell.js';
 import { AutoCell, DeadCell, FastCell } from './AltCell.js';
+
 
 window.global = {
   tissue: [],
@@ -28,13 +30,12 @@ const s = ( sketch ) => {
     let cvn_width = (size * (rows-2));
 
     sketch.createCanvas(cvn_height, cvn_width);
-
     window.global.tissue = new Tissue(cols, rows);
   };
 
   sketch.draw = () => {
     sketch.background(0);
-   
+    
     //Shifts canvas to remove 2top rows and col.
     sketch.translate((size * -1), (size * -2))
 
@@ -74,6 +75,9 @@ const s = ( sketch ) => {
               break;
             case 'Fast':
               tissue.setCell(i, j, new FastCell(i*size, j*size, size, i, j));
+              break;
+            case 'Normal':
+              tissue.setCell(i, j, new Cell(i*size, j*size, size, i, j));
               break;
           }
         }

@@ -29,32 +29,17 @@ export class Tissue {
     setCell(x, y, cell) {
       this.tissue[x][y] = cell;
       cell.init();
-      this.refreshReference();
+      cell.refreshCellReference();
+      cell.refreshNearReference();
     }
 
-    refreshReference() {
+    refreshAllReference() {
       this.forAll( function () {
-        let x = this.colPosition;
-        let y = this.rowPosition;
-        let xSize = this.cols;
-        let ySize = this.rows;
-        let tissue = this.getTissue();
-
-        if (y > 0) this.upperCell = tissue.getCell(x, y - 1);
-        if (y < ySize - 1) this.lowerCell = tissue.getCell(x, y + 1);
-        if (x > 0) {
-          this.leftCell = tissue.getCell(x - 1, y);
-          if (y < ySize - 1) this.lowerLeftCell = tissue.getCell(x - 1, y + 1);
-          if (y > 0) this.upperLeftCell = tissue.getCell(x - 1, y - 1);
-        }
-        if (x < xSize - 1) {
-          this.rightCell = tissue.getCell(x + 1, y);
-          if (y > 0) this.upperRightCell = tissue.getCell(x + 1, y - 1);
-          if (y < ySize - 1) this.lowerRightCell = tissue.getCell(x + 1, y + 1);
-        }
+        this.refreshCellReference(); 
       });
     }
+
     forAll(func) {
-      this.tissue.forEach(row => row.forEach(cell => func.call(this.tissue[x][y])));
+      this.tissue.forEach(row => row.forEach(cell => func.call(cell)));
     }
   }

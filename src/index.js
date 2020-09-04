@@ -31,7 +31,7 @@ const s = ( sketch ) => {
     sketch.createCanvas(cvn_height, cvn_width);
 
     window.global.tissue = new Tissue(cols, rows);
-    window.global.tissue.refreshReference();
+    window.global.tissue.refreshAllReference();
   };
 
   sketch.draw = () => {
@@ -49,31 +49,27 @@ const s = ( sketch ) => {
       window.global.tissue.forAll( function() { this.updateState() } );
     }
     
-    for (let i = 0; i < cols; i++) {
-      for (let j = 0; j < rows; j++) {
-        let cell = window.global.tissue.getCell(i, j);
+    window.global.tissue.forAll( function() { // this is a cell from the tissue
+      paint(this);
         
-        paint(cell);
-        
-        if (cell.isInSide(sketch.mouseX, sketch.mouseY)) {
-            console.log("State", cell.state ,"Coord", i,", ", j, ": Vm=", cell.Vm);
-        }
-        if (sketch.mouseIsPressed && cell.isInSide(sketch.mouseX, sketch.mouseY)) 
-        { 
+      if (this.isInSide(sketch.mouseX, sketch.mouseY)) {
+        console.log("State", this.state ,"Coord", this.colPosition,", ", this.rowPosition, ": Vm=", this.Vm);
+      
+        if (sketch.mouseIsPressed) { 
           switch (AltCellBtn) {
             case 'Dead':
-              window.global.tissue.setCell(i, j, new DeadCell(i*size, j*size, size, i, j));
+              window.global.tissue.setCell(this.colPosition, this.rowPosition, new DeadCell(this.colPosition*size, this.rowPosition*size, size, this.colPosition, this.rowPosition));
               break;
             case 'Auto':
-              window.global.tissue.setCell(i, j, new AutoCell(i*size, j*size, size, i, j));
+              window.global.tissue.setCell(this.colPosition, this.rowPosition, new AutoCell(this.colPosition*size, this.rowPosition*size, size, this.colPosition, this.rowPosition));
               break;
             case 'Fast':
-              window.global.tissue.setCell(i, j, new FastCell(i*size, j*size, size, i, j));
+              window.global.tissue.setCell(this.colPosition, this.rowPosition, new FastCell(this.colPosition*size, this.rowPosition*size, size, this.colPosition, this.rowPosition));
               break;
           }
         }
-      }    
-    } 
+      }
+    } );    
   };
 };
 

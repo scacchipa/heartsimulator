@@ -35,6 +35,36 @@ export class Cell  {
                case 'inactive': return '#EA3546'; //red
           }
      }
+     refreshCellReference() {
+          const x = this.colPosition;
+          const y = this.rowPosition;
+          const xSize = this.cols;
+          const ySize = this.rows;
+          const tissue = this.getTissue();
+          if (y > 0) this.upperCell = tissue.getCell(x, y - 1);
+          if (y < ySize - 1) this.lowerCell = tissue.getCell(x, y + 1);
+          if (x > 0) {
+              this.leftCell = tissue.getCell(x - 1, y);
+              if (y < ySize - 1) this.lowerLeftCell = tissue.getCell(x - 1, y + 1);
+              if (y > 0) this.upperLeftCell = tissue.getCell(x - 1, y - 1);
+          }
+          if (x < xSize - 1) {
+              this.rightCell = tissue.getCell(x + 1, y);
+              if (y > 0) this.upperRightCell = tissue.getCell(x + 1, y - 1);
+              if (y < ySize - 1) this.lowerRightCell = tissue.getCell(x + 1, y + 1);
+          }
+     }
+     refreshNearReference() {
+          if (this.upperCell) this.upperCell.refreshCellReference();
+          if (this.lowerCell) this.lowerCell.refreshCellReference();
+          if (this.leftCell) this.leftCell.refreshCellReference();
+          if (this.rightCell) this.rightCell.refreshCellReference();
+          if (this.lowerLeftCell) this.lowerLeftCell.refreshCellReference();
+          if (this.lowerRightCell) this.lowerRightCell.refreshCellReference();
+          if (this.upperLeftCell) this.upperLeftCell.refreshCellReference();
+          if (this.upperRightCell) this.upperRightCell.refreshCellReference();
+     }
+
      calculateDesiredPotential() {
           switch (this.state) {
                case 'resting':

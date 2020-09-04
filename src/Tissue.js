@@ -55,9 +55,6 @@ export class Tissue {
       });
     }
     forAll(func) {
-      for (let x = 0; x < this.xSize; x++) 
-        for(let y = 0; y < this.ySize; y++) {
-          func.call(this.tissue[x][y]);
-        }
+      this.tissue.forEach(row => row.forEach(cell => func.call(this.tissue[x][y])));
     }
   }

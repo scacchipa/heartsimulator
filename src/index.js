@@ -45,18 +45,18 @@ const s = ( sketch ) => {
     
     if (play == true) {
       window.global.tissue.forAll( function() { this.membranePotential() } );
-      window.global.tissue.forAll( function() { this.calculateAlpha() } );
       window.global.tissue.forAll( function() { this.calculateCharge() } );
       window.global.tissue.forAll( function() { this.updateState() } );
     }
-
+    
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         let cell = window.global.tissue.getCell(i, j);
         
         paint(cell);
+        
         if (cell.isInSide(sketch.mouseX, sketch.mouseY)) {
-            console.log("State", cell.state ,"Alfa: ", cell.alpha, "Coord", i,", ", j, ": ", cell.charge);
+            console.log("State", cell.state ,"Coord", i,", ", j, ": Vm=", cell.Vm);
         }
         if (sketch.mouseIsPressed && cell.isInSide(sketch.mouseX, sketch.mouseY)) 
         { 
@@ -72,8 +72,8 @@ const s = ( sketch ) => {
               break;
           }
         }
-      }      
-    }
+      }    
+    } 
   };
 };
 

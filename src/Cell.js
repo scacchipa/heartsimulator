@@ -8,24 +8,24 @@ export class Cell  {
           this.rowPosition = _rowPosition;
 
           this.state = 'resting';
-          this.alpha = .05;
           this.Ko = 4;
           this.Ki = 120;
           this.No = 145;
           this.Ni = 15;
 
-          this.Vm = this.membranePotential();
-          this.charge = this.membranePotential();
-
-          let higherAlpha = 5;
-          let lowerAlpha = 0.05;
-          this.higherAlpha = higherAlpha;
-          this.lowerAlpha = lowerAlpha;
-          this.despolarizationSlope = (higherAlpha - lowerAlpha) / 1000;
-          this.repolarizationSlope = (lowerAlpha - higherAlpha) / 1000;
+          // this.pending1 = 0;
+          this.pending2 = 0;
 
           this.rows = window.global.rows;
           this.cols = window.global.cols
+     }
+
+     init() {
+          this.depolPotential = this.ecuationGolman(5);
+          this.polPotential = this.ecuationGolman(0.01);
+          
+          this.Vm = this.polPotential;
+          this.charge = this.polPotential;
      }
 
      stateColor() {
@@ -35,24 +35,28 @@ export class Cell  {
                case 'inactive': return '#EA3546'; //red
           }
      }
-
-     membranePotential() {
-          this.Vm = (61.5 * Math.log10(((this.Ko) + (this.alpha * this.No)) / (this.Ki + (this.alpha * this.Ni))));
-     }
-
-     calculateAlpha() {
- 
+     calculateDesiredPotential() {
           switch (this.state) {
                case 'resting':
-                    this.alpha = this.alpha = this.alpha + (0.05 - this.alpha) / 10; 
-                    break;
+                    return this.polPotential; 
                case 'open':
-                    this.alpha = Math.min(this.alpha + this.despolarizationSlope, this.higherAlpha); 
-                    break;
+                    return this.depolPotential; 
                case 'inactive':
-                    this.alpha = Math.max(this. alpha + this.repolarizationSlope, this.lowerAlpha);
-                    break;
+                    return Math.max(this.Vm - 4, this.polPotential);
           }
+     }
+     membranePotential() {
+          const coef1 = 0.2;
+          const coef2 = 0.1;
+
+          const desiredVm = this.calculateDesiredPotential();
+
+          const pending1 = (desiredVm - this.Vm) * coef1;
+          this.pending2 = this.pending2 + (pending1 - this.pending2) * coef2;
+          this.Vm = this.Vm + this.pending2;
+     }
+     ecuationGolman(alpha) {
+          return 61.5 * Math.log10((this.Ko + (alpha * this.No)) / (this.Ki + (alpha * this.Ni)));
      }
 
      calculateCharge() {
@@ -79,13 +83,13 @@ export class Cell  {
      }
 
      updateState() {
-          if (this.state == 'resting' && this.charge > -50) {
+          if (this.state == 'resting' && this.charge > -70) {
                this.state = 'open';
              }
           else if (this.state == 'open' && this.charge > +5) {
                this.state = 'inactive';
           }
-          else if (this.state == 'inactive' && this.charge < -55) {
+          else if (this.state == 'inactive' && this.charge < -75) {
                this.state = 'resting';
           }
      }

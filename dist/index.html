@@ -2,14 +2,22 @@
 <html>
   <head>
     <title>Getting Started</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
 
       body{
         background-color: #EEEEEE;
+        overflow: hidden;
       }
-  
-      @media (max-width: 600px) {
+
+      #bottons {
+        position:absolute;
+        left: 3%;
+        top: 90%
+      }
+
+      @media (max-width: 500px) {
         #chart{
           width: 100%;
         }
@@ -21,22 +29,37 @@
           width:95%;
         }
       } 
+      @media (max-width: 767.98px) { 
+        #cells-btns {
+          padding-top: 10px;
+        }
+      }
     </style>
   </head>
   <body>
+    <!-- Image and text -->
+    <nav class="navbar navbar-light" >
+      <a class="navbar-brand" href="#">
+        <img src="https://w0.pngwave.com/png/539/297/graphics-pixel-8-bit-color-8bit-heart-png-clip-art.png" width="50" height="35" class="d-inline-block align-top">
+        Tissiue simulator
+      </a>
+    </nav>
+
     <div class="container-fluid">
       <div class="row justify-content-center">
-        <div class="card mt-4 shadow rounded">
+        <div class="card shadow rounded">
           <div class="card-body">
-            <h5 class="card-title">Heart sim</h5>
             <div id="chart"></div>
           </div>
 
           <div class="card-footer bg-transparent">
 
-              <div class="row mt-2 mb-2">
-                <div class="col-4">
-                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <div class="row mb-2">
+                <div class="col-12">
+                  <button id="play" type="button" class="btn btn-primary pause"> <img src="https://img.icons8.com/material-rounded/24/000000/play.png"/></button>  
+                  <button id="stop" type="button" class="btn btn-danger mr-3 stop"> <img src="https://img.icons8.com/material/24/000000/stop.png"/></button>   
+
+                  <div id="cells-btns" class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-warning transform" data-type="Auto" >
                       <input type="radio" focus active> Auto
                     </label>
@@ -50,14 +73,11 @@
                       <input type="radio"> Normal
                     </label>
                   </div>  
-                  
-                  <button id="play" type="button" class="btn btn-primary ml-3 pause"> <img src="https://img.icons8.com/material-rounded/24/000000/play.png"/></button>  
-                  <button id="stop" type="button" class="btn btn-danger stop"> <img src="https://img.icons8.com/material/24/000000/stop.png"/></button>   
-
                 </div>
               </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
     <script>

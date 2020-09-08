@@ -1,4 +1,5 @@
 import {Tissue} from './Tissue.js';
+import {Cell} from './Cell.js';
 import { AutoCell, DeadCell, FastCell } from './AltCell.js';
 
 export default function( sketch ) {
@@ -63,6 +64,9 @@ export default function( sketch ) {
               break;
             case 'Fast':
               tissue.setCell(i, j, new FastCell(i*size, j*size, size, i, j));
+              break;
+            case 'Normal':
+              tissue.setCell(i, j, new Cell(i*size, j*size, size, i, j));
               break;
           }
         }

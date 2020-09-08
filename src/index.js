@@ -1,6 +1,7 @@
 import p5 from 'p5';
 import s  from './sketch/sketch.js'
 
+
 window.global = {
   tissue: [],
   AltCellBtn: 'Auto',

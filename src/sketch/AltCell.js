@@ -58,23 +58,7 @@ class FastCell extends Cell {
         }
    }
 
-    calculateAlpha() {
-        // let propagation_speed = 0.00125;
-        switch (this.state)
-        {
-            case 'resting':
-                 this.alpha = this.alpha + (0.09 - this.alpha); 
-                 break;
-            case 'open':
-                 this.alpha = this.alpha + (60 - this.alpha) / 10 ; 
-                 break;
-            case 'inactive':
-                 this.alpha = this.alpha + (0.05 - this.alpha) / 15; 
-                 break;
-       }
-    }
-
-    stateColor() {
+   stateColor() {
         switch (this.state) {
              case 'resting': return '#FFFFF0'; //blue'
              case 'open': return '#F9C80E'; //yellow

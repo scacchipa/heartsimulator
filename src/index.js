@@ -11,6 +11,7 @@ window.global = {
 
 window.global.rows = calculateRows();
 window.global.cols = calculateCols();
+call_test();
 let myp5 = new p5(s, 'chart');
 
 function calculateRows() { //height
@@ -38,3 +39,9 @@ function mobile() {
   else window.global.size = 15;
 }
 
+function call_test(){
+  var xhr = new XMLHttpRequest();
+  xhr.open('post', 'http://localhost:3001/');
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.send(JSON.stringify({ "email": "hello@user.com", "response": { "name": "Tester" } }));
+}

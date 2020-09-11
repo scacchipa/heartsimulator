@@ -1,4 +1,5 @@
 import {Cell} from './Cell.js';
+import {AutoCell} from './AltCell';
 
 export class Tissue {
     constructor(xSize, ySize) {
@@ -18,7 +19,7 @@ export class Tissue {
     
         for (let j = 0; j < this.ySize; j++) {
           if( i == 10  && j == 10) {
-            this.tissue[i][j] = new Cell(i*boxSize, j*boxSize, boxSize, i, j);
+            this.tissue[i][j] = new AutoCell(i*boxSize, j*boxSize, boxSize, i, j);
           }
           else {
             this.tissue[i][j] = new Cell(i*boxSize, j*boxSize, boxSize, i, j);

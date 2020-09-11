@@ -53,6 +53,10 @@ export default function( sketch ) {
         if (cell.isInSide(sketch.mouseX, sketch.mouseY)) {
             // console.log("Alfa: ", cell.alpha, "Coord", i,", ", j, ": ", cell.Vm);
         }
+        if (i == 20 && j == 20){
+          console.log('Alfa:,', cell.alpha, ',');
+        }
+
         if (sketch.mouseIsPressed && cell.isInSide(sketch.mouseX, sketch.mouseY)) 
         { 
           switch (AltCellBtn) {

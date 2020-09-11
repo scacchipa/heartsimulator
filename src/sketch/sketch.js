@@ -8,9 +8,18 @@ export default function( sketch ) {
   let cols = window.global.cols;
   let size = window.global.size;
 
-   function paint(cell) {
-    sketch.rect(cell.x, cell.y, cell.width, cell.height);
-    sketch.fill(cell.stateColor());
+  let requet_data = []; 
+
+  function call_test(){
+    var xhr = new XMLHttpRequest();
+    xhr.open('post', 'http://localhost:3001/');
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.send(JSON.stringify(requet_data));
+  }
+
+  function paint(cell) {
+  sketch.rect(cell.x, cell.y, cell.width, cell.height);
+  sketch.fill(cell.stateColor());
   }
 
   sketch.setup = () => {  
@@ -43,6 +52,7 @@ export default function( sketch ) {
     {
       tissue.create_grid_cell();
       window.global.stop = false ;
+      call_test();
     } 
 
     for (let i = 0; i < cols; i++) {
@@ -53,8 +63,10 @@ export default function( sketch ) {
         if (cell.isInSide(sketch.mouseX, sketch.mouseY)) {
             // console.log("Alfa: ", cell.alpha, "Coord", i,", ", j, ": ", cell.Vm);
         }
+
         if (i == 20 && j == 20){
           console.log('Alfa:,', cell.alpha, ',');
+          requet_data.push({'Alfa': cell.alpha});
         }
 
         if (sketch.mouseIsPressed && cell.isInSide(sketch.mouseX, sketch.mouseY)) 

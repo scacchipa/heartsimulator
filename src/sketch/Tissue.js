@@ -18,7 +18,7 @@ export class Tissue {
         this.tissue[i] = [];
     
         for (let j = 0; j < this.ySize; j++) {
-          if( i == 10  && j == 10) {
+          if((i == 10  && j == 10) || (i == 11  && j == 10)) {
             this.tissue[i][j] = new AutoCell(i*boxSize, j*boxSize, boxSize, i, j);
           }
           else {

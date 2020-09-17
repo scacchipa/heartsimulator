@@ -94,7 +94,7 @@
 
       //Play stop
       $('#play').on('click', function(e){
-        manage_pay(e.currentTarget);
+        manage_play(e.currentTarget);
       })
 
       //Trasformation click
@@ -114,7 +114,7 @@
         }
       })
 
-      function manage_pay(e){
+      function manage_play(e){
         window.global.play = (!window.global.play); 
         if($(e).hasClass('pause'))
         {

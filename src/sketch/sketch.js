@@ -62,9 +62,9 @@ export default function( sketch ) {
             // console.log("Alfa: ", cell.alpha, "Coord", i,", ", j, ": ", cell.Vm);
         }
 
-        if (i == 20 && j == 20){
+        if (i == 12 && j == 12){
           console.log('Alfa:', cell.alpha);
-          window.global.request_data.data.push(cell.alpha);
+          window.global.request_data.data.push(cell.Vm);
         }
 
         if (sketch.mouseIsPressed && cell.isInSide(sketch.mouseX, sketch.mouseY)) 

@@ -5,7 +5,7 @@ import s  from './sketch/sketch.js'
 window.global = {
   tissue: [],
   AltCellBtn: 'Auto',
-  play: false,
+  play: true,
   stop: false,
   request_data : {
     "name": 'test1',
@@ -18,7 +18,7 @@ window.global.cols = calculateCols();
 
 let myp5 = new p5(s, 'chart');
 
-setTimeout(() => { call_test() }, 10000);
+setTimeout(() => { call_test() }, 13000);
 
 function calculateRows() { //height
   let cell_to_be_removed; 

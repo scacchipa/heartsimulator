@@ -8,17 +8,12 @@ export default function( sketch ) {
   let cols = window.global.cols;
   let size = window.global.size;
 
-  let requet_data = {
-    "name": 'test1',
-    "data": []
-  }; 
-
-  function call_test(){
-    var xhr = new XMLHttpRequest();
-    xhr.open('post', 'http://localhost:3000/');
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhr.send(JSON.stringify(requet_data));
-  }
+  // function call_test(){
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.open('post', 'http://localhost:3000/');
+  //   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  //   xhr.send(JSON.stringify(requet_data));
+  // }
 
   function paint(cell) {
   sketch.rect(cell.x, cell.y, cell.width, cell.height);
@@ -68,8 +63,8 @@ export default function( sketch ) {
         }
 
         if (i == 20 && j == 20){
-          console.log('Alfa:,', cell.alpha, ',');
-          requet_data.data.push(cell.alpha);
+          console.log('Alfa:', cell.alpha);
+          window.global.request_data.data.push(cell.alpha);
         }
 
         if (sketch.mouseIsPressed && cell.isInSide(sketch.mouseX, sketch.mouseY)) 

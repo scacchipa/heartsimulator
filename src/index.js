@@ -6,13 +6,19 @@ window.global = {
   tissue: [],
   AltCellBtn: 'Auto',
   play: false,
-  stop: false
+  stop: false,
+  request_data : {
+    "name": 'test1',
+    "data": []
+  }
 }; 
 
 window.global.rows = calculateRows();
 window.global.cols = calculateCols();
-call_test();
+
 let myp5 = new p5(s, 'chart');
+
+setTimeout(() => { call_test() }, 10000);
 
 function calculateRows() { //height
   let cell_to_be_removed; 
@@ -41,7 +47,7 @@ function mobile() {
 
 function call_test(){
   var xhr = new XMLHttpRequest();
-  xhr.open('post', 'http://localhost:3001/');
+  xhr.open('post', 'http://localhost:3000/');
   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  xhr.send(JSON.stringify({ "email": "hello@user.com", "response": { "name": "Tester" } }));
+  xhr.send(JSON.stringify(window.global.request_data));
 }

@@ -18,7 +18,7 @@ window.global.cols = calculateCols();
 
 let myp5 = new p5(s, 'chart');
 
-setTimeout(() => { call_test() }, 13000);
+setTimeout(() => { graph() }, 20000);
 
 function calculateRows() { //height
   let cell_to_be_removed; 
@@ -45,7 +45,7 @@ function mobile() {
   else window.global.size = 15;
 }
 
-function call_test(){
+function graph(){
   var xhr = new XMLHttpRequest();
   xhr.open('post', 'http://localhost:3000/');
   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");

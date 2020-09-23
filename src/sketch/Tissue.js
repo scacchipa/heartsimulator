@@ -2,7 +2,6 @@ import {Cell} from './Cell.js';
 
 export class Tissue {
     constructor(xSize, ySize) {
-  
       this.xSize = xSize;
       this.ySize = ySize;
       this.tissue = [];
@@ -11,7 +10,7 @@ export class Tissue {
     }
 
     create_grid_cell() {
-      let boxSize = window.global.size;
+      let boxSize = window.global.cell_size;
       
       for (let i = 0; i < this.xSize; i++) {
         this.tissue[i] = [];

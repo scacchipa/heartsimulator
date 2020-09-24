@@ -15,9 +15,9 @@ export class Tissue {
       for (let i = 0; i < this.xSize; i++) {
         this.tissue[i] = [];
         for (let j = 0; j < this.ySize; j++) {
+          
           let cell = new Cell(i*boxSize, j*boxSize, boxSize, i, j);
           this.tissue[i][j] = cell;
-          cell.init();
         }
       }
     }
@@ -28,7 +28,7 @@ export class Tissue {
     
     setCell(x, y, cell) {
       this.tissue[x][y] = cell;
-      cell.init();
+
       cell.refreshCellReference();
       cell.refreshNearReference();
     }

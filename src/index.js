@@ -4,14 +4,20 @@ import s  from './sketch/sketch.js'
 window.global = {
   tissue: [],
   AltCellBtn: 'Auto',
-  play: false,
-  stop: false
+  play: true,
+  stop: false,
+  request_data : {
+    "name": 'test',
+    "data": []
+  }
 }; 
 
 window.global.rows = calculateRows();
 window.global.cols = calculateCols();
 
 let myp5 = new p5(s, 'chart');
+
+setTimeout(() => { graph() }, 25000);
 
 function calculateRows() { //height
   let cell_to_be_removed; 
@@ -38,3 +44,9 @@ function mobile() {
   else window.global.size = 15;
 }
 
+function graph(){
+  var xhr = new XMLHttpRequest();
+  xhr.open('post', 'http://localhost:3000/');
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.send(JSON.stringify(window.global.request_data));
+}

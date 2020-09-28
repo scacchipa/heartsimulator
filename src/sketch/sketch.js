@@ -40,7 +40,12 @@ export default( sketch ) => {
     
     window.global.tissue.forAll( function() { // this is a cell from the tissue
       paint(this);
-        
+
+      if (this.colPosition == 12 && this.rowPosition == 12){
+        console.log('i am in');
+        window.global.request_data.data.push(this.Vm);
+      }
+
       if (this.isInSide(sketch.mouseX, sketch.mouseY)) {
         console.log("State", this.state ,"Coord", this.colPosition,", ", this.rowPosition, " Vm=", this.Vm);
       

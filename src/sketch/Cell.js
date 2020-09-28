@@ -114,7 +114,6 @@ export class Cell {
     }
   }
 
-
   isInSide(mX, mY) {
     mX = mX - (this.width * -1);
     mY = mY - (this.width * -1);

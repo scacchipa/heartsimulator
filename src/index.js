@@ -1,14 +1,13 @@
 import p5 from 'p5';
 import s  from './sketch/sketch.js'
 
-
 window.global = {
   tissue: [],
   AltCellBtn: 'Auto',
   play: true,
   stop: false,
   request_data : {
-    "name": 'test1',
+    "name": 'test',
     "data": []
   }
 }; 
@@ -18,7 +17,7 @@ window.global.cols = calculateCols();
 
 let myp5 = new p5(s, 'chart');
 
-setTimeout(() => { graph() }, 20000);
+setTimeout(() => { graph() }, 25000);
 
 function calculateRows() { //height
   let cell_to_be_removed; 

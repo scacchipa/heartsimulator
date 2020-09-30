@@ -1,12 +1,12 @@
-import {Tissue} from './Tissue.js';
-import { AutoCell, DeadCell, FastCell } from './AltCell.js';
+import { Tissue } from './Tissue.js';
+import { Helper } from './Helper.js';
 
 export default( sketch ) => {
 
   let rows = window.global.rows;
   let cols = window.global.cols;
   let size = window.global.size;
-
+  
   function paint(cell) {
     sketch.rect(cell.x, cell.y, cell.width, cell.height);
     sketch.fill(cell.stateColor());
@@ -28,45 +28,34 @@ export default( sketch ) => {
     //Shifts canvas to remove 2top rows and col.
     sketch.translate((size * -1), (size * -2))
 
+    let tissue = window.global.tissue; 
     let play = window.global.play;
     let stop = window.global.stop;
-    let AltCellBtn = window.global.AltCellBtn;
     
     if (play == true) {
-      window.global.tissue.forAll( function() { this.membranePotential() } );
-      window.global.tissue.forAll( function() { this.calculateAlpha() } );
-      window.global.tissue.forAll( function() { this.calculateCharge() } );
-      window.global.tissue.forAll( function() { this.updateState() } );
+      tissue.forAll( function() { this.membranePotential() } );
+      tissue.forAll( function() { this.calculateAlpha() } );
+      tissue.forAll( function() { this.calculateCharge() } );
+      tissue.forAll( function() { this.updateState() } );
     }
+
     if (stop == true){
-      window.global.tissue = new Tissue(cols, rows);
-      window.global.tissue.refreshAllReference();
+      tissue = new Tissue(cols, rows);
+      tissue.refreshAllReference();
       stop = false;
     }
-    window.global.tissue.forAll( function() { 
+
+    tissue.forAll( function() { 
       paint(this);
 
       if (this.colPosition == 12 && this.rowPosition == 12){
-        console.log('i am in');
         window.global.request_data.data.push(this.Vm);
       }
 
       if (this.isInSide(sketch.mouseX, sketch.mouseY)) {
         console.log("State", this.state ,"Coord", this.colPosition,", ", this.rowPosition, " Vm=", this.Vm);
       
-        if (sketch.mouseIsPressed) { 
-          switch (AltCellBtn) {
-            case 'Dead':
-              window.global.tissue.setCell(this.colPosition, this.rowPosition, new DeadCell(this.colPosition*size, this.rowPosition*size, size, this.colPosition, this.rowPosition));
-              break;
-            case 'Auto':
-              window.global.tissue.setCell(this.colPosition, this.rowPosition, new AutoCell(this.colPosition*size, this.rowPosition*size, size, this.colPosition, this.rowPosition));
-              break;
-            case 'Fast':
-              window.global.tissue.setCell(this.colPosition, this.rowPosition, new FastCell(this.colPosition*size, this.rowPosition*size, size, this.colPosition, this.rowPosition));
-              break;
-          }
-        }
+        if (sketch.mouseIsPressed) Helper.transaform_cell.call(this); 
       }
     } );    
   };

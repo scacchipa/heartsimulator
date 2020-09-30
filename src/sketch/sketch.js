@@ -29,6 +29,7 @@ export default( sketch ) => {
     sketch.translate((size * -1), (size * -2))
 
     let play = window.global.play;
+    let stop = window.global.stop;
     let AltCellBtn = window.global.AltCellBtn;
     
     if (play == true) {
@@ -37,8 +38,12 @@ export default( sketch ) => {
       window.global.tissue.forAll( function() { this.calculateCharge() } );
       window.global.tissue.forAll( function() { this.updateState() } );
     }
-    
-    window.global.tissue.forAll( function() { // this is a cell from the tissue
+    if (stop == true){
+      window.global.tissue = new Tissue(cols, rows);
+      window.global.tissue.refreshAllReference();
+      stop = false;
+    }
+    window.global.tissue.forAll( function() { 
       paint(this);
 
       if (this.colPosition == 12 && this.rowPosition == 12){

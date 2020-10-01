@@ -47,7 +47,7 @@ export default( sketch ) => {
       }
 
       if (this.isInSide(sketch.mouseX, sketch.mouseY)) {
-        console.log("State", this.state ,"Coord", this.colPosition,", ", this.rowPosition, " Vm=", this.Vm);
+        console.log("State", this.state ,"Coord", this.colPosition,", ", this.rowPosition, " Vm=", this.Vm, "Step=", this.step);
       
         if (sketch.mouseIsPressed) { 
           switch (AltCellBtn) {

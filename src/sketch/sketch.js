@@ -27,10 +27,9 @@ export default( sketch ) => {
       tissue.forAll( function() { this.updateState() } );
     }
 
-    if (stop == true){
-      tissue = new Tissue(cols, rows);
-      tissue.refreshAllReference();
-      stop = false;
+    if (stop == true) {
+      create_grid();
+      window.global.stop = false;
     }
 
     tissue.forAll( function() { 

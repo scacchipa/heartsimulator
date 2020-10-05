@@ -4,7 +4,7 @@ import s  from './sketch/sketch.js'
 window.global = {
   tissue: [],
   AltCellBtn: 'Auto',
-  play: true,
+  play: false,
   stop: false,
   request_data : {
     "name": 'test',

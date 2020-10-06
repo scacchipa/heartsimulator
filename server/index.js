@@ -20,7 +20,7 @@ app.post('/', (req, res) => {
         type: "line"
       },
       title: {
-          text: "Spread | Normal cell"
+        text: "Spread | Normal cell"
       },
       "series": [
         {
@@ -43,6 +43,7 @@ app.post('/', (req, res) => {
     fs.writeFileSync(outputFile, imageb64, "base64", function (err) {
       if (err) console.log(err);
     });
+    res.download(outputFile);
     console.log("Saved image!");
     chartExporter.killPool();
   });

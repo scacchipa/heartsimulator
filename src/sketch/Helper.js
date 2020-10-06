@@ -28,8 +28,11 @@ export class Helper {
   }
 
   static record_data_for_graph(){
-    if (this.colPosition == 12 && this.rowPosition == 12) {
+    let record = window.global.record_graph;
+    if (this.colPosition == 12 && this.rowPosition == 12 && (record == true)) {
       window.global.request_data.data.push(this.Vm);
+
+      console.log('iam in')
     } 
   }
 }

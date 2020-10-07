@@ -8,7 +8,6 @@ window.global = {
   stop: false,
   record_graph: false,
   request_data : {
-    "name": 'test',
     "data": []
   }
 }; 

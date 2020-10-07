@@ -136,14 +136,31 @@
     $('#graph_btn').on('click', function () {
       //send graph second click
       if (graph_clicks == 1) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('post', 'http://localhost:3000/');
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.send(JSON.stringify(window.global.request_data));
-        // $.post('http://localhost:3000/', { data })
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('post', 'http://localhost:3000/');
+        // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        // xhr.send(JSON.stringify(window.global.request_data));
+        let data = JSON.stringify(window.global.request_data);
+        // $.post('http://localhost:3000/',  {data} )
+
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:3000/",
+          // The key needs to match your method's input parameter (case-sensitive).
+          data: JSON.stringify(window.global.request_data),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (response) { 
+            // $.get(`http://localhost:3000/download?file=${response.status}`)
+            console.log(response.status) 
+          },
+          error: function (errMsg) {
+            alert(errMsg);
+          }
+        });
+
         console.log('>>>>>>>>>>>>>>> click 2')
         window.global.record_graph = false;
-
       }
       //start recording one click
       if (graph_clicks == 0) {
@@ -151,8 +168,6 @@
         graph_clicks = graph_clicks + 1;
         console.log('>>>>>>>>>>>>>>> click 1')
       }
-
-
     })
 
 
@@ -167,7 +182,6 @@
         $(e).toggleClass('play pause')
       }
     }
-
 
   </script>
 </body>

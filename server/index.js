@@ -10,6 +10,7 @@ const port = 3000
 
 app.post('/', (req, res) => {
   console.log(req.body);
+  let outputFile = `./graphs/${Date.now()}.png`;
 
   // Chart details object specifies chart type and data to plot
   const chartDetails = {
@@ -34,20 +35,29 @@ app.post('/', (req, res) => {
   // Initialize the exporter
   chartExporter.initPool();
 
-  chartExporter.export(chartDetails, (err, res) => {
+  chartExporter.export(chartDetails, async (req,res,err) => {
     // Get the image data (base64)
     let imageb64 = res.data;
     // Filename of the output
-    let outputFile = `./graphs/${req.body.name}.png`;
     // Save the image to file
-    fs.writeFileSync(outputFile, imageb64, "base64", function (err) {
+    await fs.writeFileSync(outputFile, imageb64, "base64", function (err) {
       if (err) console.log(err);
-    });
-    res.download(outputFile);
+    })
+    
+    chartExporter.killPool();    
     console.log("Saved image!");
-    chartExporter.killPool();
   });
+
+  // res.status(200).json({status:outputFile});
 })
+
+app.get('/download', function(req, res){
+
+  // console.log(req)
+  const file = req.query.file;
+  fs.existsSync(file);
+  res.download(file); // Set disposition and send it.
+});
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)

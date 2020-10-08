@@ -35,9 +35,9 @@ app.post('/', (req, res) => {
   // Initialize the exporter
   chartExporter.initPool();
 
-  chartExporter.export(chartDetails, async (req,res,err) => {
+  chartExporter.export(chartDetails, async (req ,phantom_res, err) => {
     // Get the image data (base64)
-    let imageb64 = res.data;
+    let imageb64 = phantom_res.data;
     // Filename of the output
     // Save the image to file
     await fs.writeFileSync(outputFile, imageb64, "base64", function (err) {
@@ -45,17 +45,14 @@ app.post('/', (req, res) => {
     })
     
     chartExporter.killPool();    
+    res.status(200).json({status:outputFile});
     console.log("Saved image!");
   });
 
-  // res.status(200).json({status:outputFile});
 })
 
 app.get('/download', function(req, res){
-
-  // console.log(req)
   const file = req.query.file;
-  fs.existsSync(file);
   res.download(file); // Set disposition and send it.
 });
 

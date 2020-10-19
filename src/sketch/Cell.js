@@ -4,15 +4,25 @@ export class Cell {
     this.y = _y;
     this.width = _s;
     this.height = _s;
-    this.colPosition = _colPosition;
-    this.rowPosition = _rowPosition;
 
-    this.state = 'resting';
-    this.alpha = .05;
     this.Ko = 4;
     this.Ki = 120;
     this.No = 145;
-    this.Ni = 15;
+    this.Ni = 15
+
+    this.colPosition = _colPosition;
+    this.rowPosition = _rowPosition;
+    this.alphaVector = 
+          [-75, -70, -65, -60, -55, -50, -45, -40, -35, 30, -25,
+            -20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 10, 7, 5, 5, 5, 5, 5, 5, 5, 5, 5,5, 5, 5, 5, 5, 5, 5, 5, 4, 3, 2,
+            0, -2, -4, -7, -11, -16, -22, -29, -37, -45, -54, -62, -67, -71, -74, -75, -75, -75, -75, -75,
+            -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75,
+            -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75, -75,
+            -75, -75, -75, -75, -75, -75, -75]
+          .map(Vm => (Vm + 20) * 1.3)
+          .map(Vm => this.invAlpha(Vm));
+    this.state = 'resting';
+    this.alpha = .05;
 
     this.Vm = this.membranePotential();
     this.charge = this.membranePotential();
@@ -20,8 +30,14 @@ export class Cell {
     this.tissue = window.global.tissue;
     this.rows = window.global.rows;
     this.cols = window.global.cols
-  }
 
+    this.step = 70;
+  }
+  invAlpha(Vm) {
+    let x = Math.pow(10, Vm / 61.5);
+    let alpha = (-1) * (x * this.Ki - this.Ko) / (x * this.Ni - this.No);
+    return alpha;
+  }
   stateColor() {
     switch (this.state) {
       case 'resting': return '#032B43'; //blue'
@@ -62,17 +78,12 @@ export class Cell {
   }
 
   calculateAlpha() {
-    switch (this.state) {
-      case 'resting':
-        this.alpha = this.alpha + (0.05 - this.alpha) / 10;
-        break;
-      case 'open':
-        this.alpha = this.alpha + (50 - this.alpha) / 50;
-        break;
-      case 'inactive':
-        this.alpha = this.alpha + (0.05 - this.alpha) / 20;
-        break;
+    if (this.alphaVector[this.step]) {
+      this.alpha = this.alphaVector[this.step];
+    } else {
+      this.alpha = this.alphaVector[this.alphaVector.length - 1];
     }
+    this.step += 1;
   }
 
   membranePotential() {
@@ -103,10 +114,11 @@ export class Cell {
   }
 
   updateState() {
-    if (this.state == 'resting' && this.charge > -50) {
+    if (this.state == 'resting' && this.charge > -55) {
       this.state = 'open';
+      this.step = 0;
     }
-    else if (this.state == 'open' && this.charge > -20) {
+    else if (this.state == 'open' && this.charge > 0) {
       this.state = 'inactive';
     }
     else if (this.state == 'inactive' && this.charge < -55) {

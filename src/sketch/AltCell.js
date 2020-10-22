@@ -20,6 +20,7 @@ class AutoCell extends Cell {
     if (this.state == 'resting' && this.charge > -45) {
       this.state = 'open';
       this.step = 0;
+      if (this.onOpening) this.onOpening()
     }
     else if (this.state == 'open' && this.charge > 0) {
       this.state = 'inactive';
@@ -52,6 +53,8 @@ class AutoCell extends Cell {
   }
 
   stateColor() {
+    if (this.onOpening) return "#345678";
+    else
     switch (this.state) {
       case 'resting': return '#feb38b'; //blue'
       case 'open': return '#F9C80E'; //green
@@ -82,6 +85,8 @@ class FastCell extends Cell {
         .map(Vm => this.invAlpha(Vm));
   }
   stateColor() {
+    if (this.onOpening) return "#234567";
+    else 
     switch (this.state) {
       case 'resting': return '#FFFFF0'; //blue'
       case 'open': return '#F9C80E'; //yellow

@@ -1,65 +1,69 @@
-import { Tissue } from './Tissue.js';
-import { Helper } from './Helper.js';
+import {Tissue} from './Tissue.js';
+import { AutoCell, DeadCell, FastCell } from './AltCell.js';
 
 export default( sketch ) => {
 
   let rows = window.global.rows;
   let cols = window.global.cols;
   let size = window.global.size;
-  
-  sketch.setup = () => { 
-    create_canvas(sketch)
-    create_grid()
-  };
-
-  sketch.draw = () => {
-    
-    let tissue = window.global.tissue; 
-    let play = window.global.play;
-    let stop = window.global.stop;
-    
-    sketch.translate((size * -1), (size * -2))  //Shifts canvas to remove 2top rows and col.
-    
-    if (play == true) {
-      tissue.forAll( function() { this.membranePotential() } );
-      tissue.forAll( function() { this.calculateAlpha() } );
-      tissue.forAll( function() { this.calculateCharge() } );
-      tissue.forAll( function() { this.updateState() } );
-    }
-
-    if (stop == true) {
-      create_grid();
-      window.global.stop = false;
-    }
-
-    tissue.forAll( function() { 
-      paint(this);
-
-      Helper.record_data_for_graph.call(this)
-
-      if (this.isInSide(sketch.mouseX, sketch.mouseY)) {
-        console.log(`State: ${this.state} Coord: ${this.colPosition}, ${this.rowPosition}  Vm: ${this.Vm}`);
-        if (sketch.mouseIsPressed) Helper.transaform_cell.call(this); 
-      }
-    });
-  };
 
   function paint(cell) {
     sketch.rect(cell.x, cell.y, cell.width, cell.height);
     sketch.fill(cell.stateColor());
   }
 
-  function create_canvas(sketch){
+  sketch.setup = () => {  
     let cvn_height = (size * (cols - 2));
     let cvn_width = (size * (rows-2));
 
     sketch.createCanvas(cvn_height, cvn_width);
-  }
 
-  function create_grid(){
     window.global.tissue = new Tissue(cols, rows);
     window.global.tissue.refreshAllReference();
-  }
+    window.global.tissue.setCheckPoints("Fast", 15, 10, 55, 10);
+    window.global.tissue.setCheckPoints("Slow", 15, 20, 55, 20);
+    window.global.tissue.setCheckPoints("SlowFast", 15, 30, 55, 30);
+  };
 
+  sketch.draw = () => {
+    sketch.background(0);
+
+    //Shifts canvas to remove 2top rows and col.
+    sketch.translate((size * -1), (size * -2))
+
+    let play = window.global.play;
+    let AltCellBtn = window.global.AltCellBtn;
+    
+    if (play == true) {
+      window.global.tissue.forAll( function() { this.membranePotential() } );
+      window.global.tissue.forAll( function() { this.calculateAlpha() } );
+      window.global.tissue.forAll( function() { this.calculateCharge() } );
+      window.global.tissue.forAll( function() { this.updateState() } );
+      window.global.tissue.cycle += 1; // advance clock
+    }
+    
+    window.global.tissue.forAll( function() { // this is a cell from the tissue
+      paint(this);
+
+      if (this.isInSide(sketch.mouseX, sketch.mouseY)) {
+        console.log("State", this.state ,"Coord", this.colPosition,", ", this.rowPosition,
+         " Vm=", this.Vm, " charge=", this.charge, "Step=", this.step);
+      
+        if (sketch.mouseIsPressed) { 
+          switch (AltCellBtn) {
+            case 'Dead':
+              window.global.tissue.setCell(this.colPosition, this.rowPosition, new DeadCell(this.colPosition*size, this.rowPosition*size, size, this.colPosition, this.rowPosition));
+              break;
+            case 'Auto':
+              window.global.tissue.setCell(this.colPosition, this.rowPosition, new AutoCell(this.colPosition*size, this.rowPosition*size, size, this.colPosition, this.rowPosition));
+              break;
+            case 'Fast':
+              window.global.tissue.setCell(this.colPosition, this.rowPosition, new FastCell(this.colPosition*size, this.rowPosition*size, size, this.colPosition, this.rowPosition));
+              break;
+          }
+        }
+      }
+    } );
+  };
 };
 

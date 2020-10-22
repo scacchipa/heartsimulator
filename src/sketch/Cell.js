@@ -27,7 +27,6 @@ export class Cell {
     this.Vm = this.membranePotential();
     this.charge = this.membranePotential();
 
-    this.tissue = window.global.tissue;
     this.rows = window.global.rows;
     this.cols = window.global.cols
 
@@ -39,6 +38,8 @@ export class Cell {
     return alpha;
   }
   stateColor() {
+    if (this.onOpening) return '#123456';
+    else
     switch (this.state) {
       case 'resting': return '#032B43'; //blue'
       case 'open': return '#F9C80E'; //green
@@ -65,7 +66,6 @@ export class Cell {
       if (y < ySize - 1) this.lowerRightCell = tissue.getCell(x + 1, y + 1);
     }
   }
-
   refreshNearReference() {
     if (this.upperCell) this.upperCell.refreshCellReference();
     if (this.lowerCell) this.lowerCell.refreshCellReference();
@@ -117,6 +117,7 @@ export class Cell {
     if (this.state == 'resting' && this.charge > -55) {
       this.state = 'open';
       this.step = 0;
+      if (this.onOpening) this.onOpening();
     }
     else if (this.state == 'open' && this.charge > 0) {
       this.state = 'inactive';

@@ -21,16 +21,31 @@ app.post('/', (req, res) => {
         type: "line"
       },
       title: {
-        text: "Spread | Normal cell"
+        text: "Fibra rapida vs lenta" 
+      },
+      yAxis: {
+        title: {
+            text: 'Potencial de membrana (mV)'
+        }
+      },
+      xAxis: {
+        title: {
+            text: 'Tiempo (ms)'
+        }
       },
       "series": [
         {
-          "data": req.body.data,
+          "data": req.body.data.slow,
+          "name": "Fibra lenta",
+          "type": "line",
+        },
+        {
+          "data": req.body.data.fast,
+          "name": "Fibra rapida",
           "type": "line",
         },
       ]
     }
-
   };
   // Initialize the exporter
   chartExporter.initPool();

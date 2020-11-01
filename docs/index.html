@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Getting Started</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #EEEEEE;
+      overflow: hidden;
+    }
+
+    #bottons {
+      position: absolute;
+      left: 3%;
+      top: 90%
+    }
+
+    .card-footer {
+      padding-bottom: 0px;
+    }
+
+    @media (max-width: 500px) {
+      #chart {
+        width: 100%;
+      }
+
+      .card-body {
+        padding: 0rem !important;
+      }
+
+      .card {
+        width: 95%;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      #cells-btns {
+        padding-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-light" >
+      <a class="navbar-brand" href="#">
+        <img src="https://w0.pngwave.com/png/539/297/graphics-pixel-8-bit-color-8bit-heart-png-clip-art.png" width="50" height="35" class="d-inline-block align-top">
+        Tissue simulator
+      </a>
+    </nav>
+
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="card shadow rounded">
+        <div class="card-body">
+          <div id="chart"></div>
+        </div>
+
+        <div class="card-footer bg-transparent">
+
+          <div class="row justify-content-between mr-2 mb-2">
+            <div class="col-11">
+              <button id="play" type="button" class="btn btn-primary pause"> <img
+                  src="https://img.icons8.com/material-rounded/24/000000/play.png" /></button>
+              <button id="stop" type="button" class="btn btn-danger mr-3 stop"> <img
+                  src="https://img.icons8.com/material/24/000000/stop.png" /></button>
+
+              <div id="cells-btns" class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-warning transform" data-type="Auto">
+                  <input type="radio" focus active> Auto
+                </label>
+                <label class="btn btn-light transform" data-type="Fast">
+                  <input type="radio"> Fast
+                </label>
+                <label class="btn btn-dark transform" data-type="Dead">
+                  <input type="radio"> Dead
+                </label>
+              </div>
+              <button class="btn btn-secondary transform" data-type="Normal"> Eraser </button>
+            </div>
+            <div class="col-1">
+              <button id="graph_btn" class="btn btn-secondary"> Graph </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script>
+
+  </script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+
+  <script src="main.js"></script>
+  <script>
+
+    //Play stop
+    $('#play').on('click', function (e) {
+      manage_play(e.currentTarget);
+    })
+
+    //Trasformation click
+    $('.transform').on('click', function () {
+      let type = $(this).data('type');
+      window.global.AltCellBtn = type;
+    })
+
+    $('#stop').on('click', function () {
+      window.global.stop = true;
+      let target = $('#play');
+
+      if ($(target).hasClass('play')) {
+        console.log('play')
+        manage_play(target);
+      }
+    })
+
+    let graph_clicks = 0;
+    $('#graph_btn').on('click', function () {
+      //send graph second click
+      
+      if (graph_clicks == 1) {
+        console.log('>>>>>>>>>>>>>>>  Download')
+        let data = JSON.stringify(window.global.request_data);
+
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:3000/",
+          data: JSON.stringify(window.global.request_data),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (response) { 
+            window.open(`http://localhost:3000/download?file=${response.status}`,'Graph', 'width=800, height=600');
+            console.log(response.status) 
+          },
+          error: function (errMsg) {
+            alert(errMsg);
+          }
+        });
+
+        window.global.record_graph = false;
+        graph_clicks = 0;
+        return;
+      }
+
+      if (graph_clicks == 0) {
+        console.log('>>>>>>>>>>>>>>> Collecting data');
+        window.global.record_graph = true;
+        graph_clicks = graph_clicks + 1;
+      }
+    })
+
+
+    function manage_play(e) {
+      window.global.play = (!window.global.play);
+      if ($(e).hasClass('pause')) {
+        $(e).html('<img src="https://img.icons8.com/material-rounded/24/000000/pause.png"/>')
+        $(e).toggleClass('pause play')
+      }
+      else {
+        $(e).html('<img src="https://img.icons8.com/material-rounded/24/000000/play.png"/>')
+        $(e).toggleClass('play pause')
+      }
+    }
+
+  </script>
+</body>
+
+</html>

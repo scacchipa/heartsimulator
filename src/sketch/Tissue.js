@@ -6,6 +6,11 @@ export class Tissue {
     this.ySize = ySize;
     this.tissue = [];
 
+    this.Ko = 4;
+    this.Ki = 120;
+    this.No = 145;
+    this.Ni = 15;
+
     this.create_grid_cell()
   }
 

@@ -28,8 +28,14 @@ export class Helper {
   }
 
   static record_data_for_graph(){
-    if (this.colPosition == 12 && this.rowPosition == 12) {
-      window.global.request_data.data.push(this.Vm);
+    let record = window.global.record_graph;
+    if (this.colPosition == 12 && this.rowPosition == 12 && (record == true)) {
+      window.global.request_data.data.slow.push(this.Vm);
+
+    } 
+    if (this.colPosition == 10 && this.rowPosition == 10 && (record == true)) {
+      window.global.request_data.data.fast.push(this.Vm);
+
     } 
   }
 }

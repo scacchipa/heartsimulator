@@ -34,7 +34,7 @@ export default( sketch ) => {
 
     tissue.forAll( function() { 
       paint(this);
-
+      
       Helper.record_data_for_graph.call(this)
 
       if (this.isInSide(sketch.mouseX, sketch.mouseY)) {
